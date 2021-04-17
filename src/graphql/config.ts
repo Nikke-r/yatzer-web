@@ -14,10 +14,10 @@ const authLink = setContext((_: unknown, { headers }) => {
     }
 });
 
-const httpLink = new HttpLink({ uri: 'http://localhost:3001/graphql' });
+const httpLink = new HttpLink({ uri: 'https://yatzer-backend.herokuapp.com' });
 
 const webSocketLink = new WebSocketLink({
-    uri: 'ws://localhost:3001/graphql',
+    uri: 'wss://yatzer-backend.herokuapp.com/graphql',
     options: {
         reconnect: true,
         timeout: 20000,
