@@ -14,7 +14,7 @@ const authLink = setContext((_: unknown, { headers }) => {
     }
 });
 
-const httpLink = new HttpLink({ uri: 'https://yatzer-backend.herokuapp.com' });
+const httpLink = new HttpLink({ uri: 'https://yatzer-backend.herokuapp.com/graphql' });
 
 const webSocketLink = new WebSocketLink({
     uri: 'wss://yatzer-backend.herokuapp.com/graphql',
