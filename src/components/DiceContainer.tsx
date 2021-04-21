@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { DiceType, GameStatus, InTurnPlayer, UserType } from '../types';
 import Dice from './Dice';
@@ -41,10 +41,16 @@ interface Props {
 
 const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices, user, inTurn, status }) => {
     const classes = useStyles();
+    const [rolling, setRolling] = useState(false);
 
-    useEffect(() => {
-        console.log(inTurn.rolling);
-    }, [inTurn]);
+    const handleDiceRoll = async () => {
+        setRolling(true);
+
+        await rollDices();
+
+        setRolling(false);
+    }
+
     return (
         <div className={classes.container}>
             <div className={classes.content}>  
@@ -58,15 +64,27 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
                     </Typography>
                 </div>
                 <div className={classes.dices}>
-                    {dices.map((dice, index) => <Dice rolling={inTurn.rolling} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
+                    {dices.map((dice, index) => <Dice rolling={rolling} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
                 </div>
                 <Button 
                     variant="outlined"
                     className={classes.rollBtn}
-                    onClick={rollDices}
-                    disabled={inTurn.numberOfThrows >= 3 || inTurn.player.username !== user!.username || status === GameStatus.Ended}
+                    onClick={handleDiceRoll}
+                    disabled={inTurn.numberOfThrows >= 3 || inTurn.player.username !== user!.username || status === GameStatus.Ended || inTurn.rolling}
                 >
-                    Roll dices!
+                    {inTurn.numberOfThrows >= 3 ? 
+                    'Place your score'
+                    :
+                    inTurn.player.username !== user!.username ? 
+                    'Not in turn'
+                    :
+                    status === GameStatus.Ended ? 
+                    'Game has ended'
+                    :
+                    inTurn.rolling ? 
+                    'Rolling'
+                    :
+                    'Roll dices'}
                 </Button>
             </div>
         </div>

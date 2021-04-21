@@ -3,6 +3,7 @@ export interface UserType {
     createdAt: number;
     games: GameType[];
     token?: string;
+    notifications: Notification[];
 }
 
 export enum ScoreboardRowName {
@@ -91,4 +92,9 @@ export interface SendMessageValues {
 export interface LobbyType {
     users: UserType[];
     messages: ChatMessage[];
+}
+
+export interface Notification {
+    from: UserType;
+    message: string;
 }

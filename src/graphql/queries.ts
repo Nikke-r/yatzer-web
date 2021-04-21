@@ -48,6 +48,12 @@ export const SIGN_IN = gql`
 export const CURRENT_USER = gql`
     query CurrentUser {
         currentUser {
+            notifications {
+                from {
+                    username
+                }
+                message
+            }
             username
             token
             createdAt

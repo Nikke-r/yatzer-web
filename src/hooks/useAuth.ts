@@ -23,7 +23,7 @@ interface CurrentUserType {
 const useAuth = () => {
     const { handleNotification, notification } = useAppNotifications();
     const [user, setUser] = useState<UserType>();
-    const currentUser = useQuery<CurrentUserType>(CURRENT_USER, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
+    const currentUser = useQuery<CurrentUserType>(CURRENT_USER, { onError: ({ graphQLErrors }) => handleNotification('paskaa', 5)});
     const [signInQuery, signInResult] = useLazyQuery<SignInType>(SIGN_IN, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
     const [signUpMutation, signUpResult] = useMutation<SignUpType>(SIGN_UP, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
     useSubscription(USER_DATA_CHANGED, { variables: { username: user?.username }, onSubscriptionData: ({ subscriptionData }) => setUser(subscriptionData.data.userDataChanged)});
@@ -46,15 +46,11 @@ const useAuth = () => {
         signInQuery({ variables: values });
     };
 
-    const signOut = async () => {
-        try {
-            setUser(undefined);
-            localStorage.removeItem('token');
-            await client.resetStore();
-            history.push('/');
-        } catch (error) {
-            handleNotification(error.message, 5);
-        }
+    const signOut =  () => {
+        localStorage.removeItem('token');
+        client.resetStore();
+        setUser(undefined);
+        history.push('/');
     }
 
     useEffect(() => {
