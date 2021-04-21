@@ -14,11 +14,16 @@ const Dice: React.FC<Props> = ({ dice, toggleDiceSelection, rolling }) => {
         animate: { y: -100 }
     }
     
+    const rollVariant = {
+        initial: { rotate: 0 },
+        animate: { rotate: 360 }
+    }
     return (
         <motion.div
-            initial={{ rotate: 0 }}
-            animate={rolling && !dice.selected && { rotate: 360 }}
-            transition={{ duration: 0.5 }}
+            variants={rollVariant}
+            initial="initial"
+            animate={rolling && !dice.selected ? "animate" : "initial"}
+            transition={{ duration: 1 }}
         >
             <motion.div 
                 style={{
