@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 interface Props {
     dice: DiceType;
-    toggleDiceSelection: () => void;
+    toggleDiceSelection: () => Promise<void>;
     rolling: boolean;
 }
 
@@ -17,8 +17,8 @@ const Dice: React.FC<Props> = ({ dice, toggleDiceSelection, rolling }) => {
     return (
         <motion.div
             initial={{ rotate: 0 }}
-            animate={rolling ? { rotate: 360 } : { rotate: 0 }}
-            transition={{ duration: 0.5 }}
+            animate={rolling && !dice.selected ? { rotate: 360 } : { rotate: 0 }}
+            transition={{ duration: 1 }}
         >
             <motion.div 
                 style={{

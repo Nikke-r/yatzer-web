@@ -42,6 +42,7 @@ const App = () => {
         signOut,
         user,
         authLoading,
+        authError
     } = useAuth();
 
     return (
@@ -83,11 +84,13 @@ const App = () => {
                             <Route path="/signIn">
                                 <SignInForm
                                     signIn={signIn}
+                                    authError={authError}
                                 />
                             </Route>
                             <Route path="/signUp">
                                 <SignUpForm
                                     signUp={signUp}
+                                    authError={authError}
                                 />
                             </Route>
                         </Switch>}

@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import { SignUpValues } from '../types';
 import * as Yup from 'yup';
 import Center from './Center';
+import AppNotification from './AppNotification';
 
 const validationSchema = Yup.object({
     username: Yup.string().min(3).max(15).required('This field is required'),
@@ -22,9 +23,10 @@ const initialValues: SignUpValues = {
 
 interface Props {
     signUp: (values: SignUpValues) => void;
+    authError: string | undefined;
 }
 
-const SignUpForm: React.FC<Props> = ({ signUp }) => {
+const SignUpForm: React.FC<Props> = ({ signUp, authError }) => {
     const formik = useFormik({
         initialValues,
         validationSchema,
@@ -85,6 +87,7 @@ const SignUpForm: React.FC<Props> = ({ signUp }) => {
                     </Button>
                 </form>
             </Center>
+            {authError && <AppNotification notification={authError} />}
         </Container>
     );
 };

@@ -7,6 +7,7 @@ import Center from './Center';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
+import AppNotification from './AppNotification';
 
 const validationSchema = Yup.object({
     username: Yup.string().required('This field is required'),
@@ -20,9 +21,10 @@ const initialValues: SignInValues = {
 
 interface Props {
     signIn: (values: SignInValues) => void;
+    authError: string | undefined;
 }
 
-const SignInForm: React.FC<Props> = ({ signIn }) => {
+const SignInForm: React.FC<Props> = ({ signIn, authError }) => {
     const formik = useFormik({
         initialValues,
         validationSchema,
@@ -69,6 +71,7 @@ const SignInForm: React.FC<Props> = ({ signIn }) => {
                     </Button>
                 </form>
             </Center>
+            {authError && <AppNotification notification={authError} />}
         </Container>
     );
 };

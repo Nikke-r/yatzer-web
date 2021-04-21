@@ -43,8 +43,7 @@ const useAuth = () => {
     }
 
     const signIn = (values: SignInValues) => {
-        signInQuery({ variables: values});
-        history.push('/');
+        signInQuery({ variables: values });
     };
 
     const signOut = async () => {
@@ -69,10 +68,11 @@ const useAuth = () => {
             setUser(signInResult.data.signIn);
 
             if (signInResult.data.signIn.token) {
-                localStorage.setItem('token', signInResult.data.signIn.token);
+                localStorage.setItem('token', signInResult.data.signIn.token);          
+                history.push('/');
             }
         }
-    }, [signInResult]);
+    }, [signInResult, history]);
 
     return {
         signUp,

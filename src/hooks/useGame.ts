@@ -31,20 +31,20 @@ const useGame = (slug: string) => {
         }
     }, [gameQuery]);
 
-    const toggleDiceSelection = (diceIndex: number) => {
-        toggleDiceSelectionMutation({ variables: { slug, diceIndex }});
+    const toggleDiceSelection = async (diceIndex: number) => {
+        await toggleDiceSelectionMutation({ variables: { slug, diceIndex }});
     }
 
-    const rollDices = () => {
-        rollDicesMutation({ variables: { slug }});
+    const rollDices = async () => {
+        await rollDicesMutation({ variables: { slug }});
     }
 
-    const postScore = (rowName: ScoreboardRowName) => {
-        postScoreMutation({ variables: { slug, rowName }});
+    const postScore = async (rowName: ScoreboardRowName) => {
+        await postScoreMutation({ variables: { slug, rowName }});
     }
 
-    const sendMessage = (message: SendMessageValues) => {
-        newMessageMutation({ variables: { slug, message: message.message }});
+    const sendMessage = async (message: SendMessageValues) => {
+        await newMessageMutation({ variables: { slug, message: message.message }});
     }
 
     return {

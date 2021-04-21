@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { DiceType, GameStatus, InTurnPlayer, UserType } from '../types';
 import Dice from './Dice';
@@ -32,8 +32,8 @@ const useStyles = makeStyles(() => ({
 
 interface Props {
     dices: DiceType[];
-    toggleDiceSelection: (diceIndex: number) => void;
-    rollDices: () => void;
+    toggleDiceSelection: (diceIndex: number) => Promise<void>;
+    rollDices: () => Promise<void>;
     user: UserType | undefined;
     inTurn: InTurnPlayer;
     status: GameStatus;
@@ -42,7 +42,9 @@ interface Props {
 const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices, user, inTurn, status }) => {
     const classes = useStyles();
 
-
+    useEffect(() => {
+        console.log(inTurn.rolling);
+    }, [inTurn]);
     return (
         <div className={classes.container}>
             <div className={classes.content}>  
