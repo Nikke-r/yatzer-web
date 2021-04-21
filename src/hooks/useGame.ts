@@ -15,7 +15,7 @@ interface GameDataChangedType {
 }
 
 const useGame = (slug: string) => {
-    const { handleNotification } = useAppNotifications();
+    const { handleNotification, notification } = useAppNotifications();
     const [game, setGame] = useState<GameType>();
     const gameQuery = useQuery<GetGameType>(GET_GAME, { variables: { slug }, onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5) });
     const [toggleDiceSelectionMutation] = useMutation(TOGGLE_DICE_SELECTION, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5) });
@@ -53,7 +53,8 @@ const useGame = (slug: string) => {
         postScore,
         sendMessage,
         game,
-        gameLoading: gameQuery.loading 
+        gameLoading: gameQuery.loading,
+        gameErrors: notification
     }
 };
 

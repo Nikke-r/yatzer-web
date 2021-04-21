@@ -1,26 +1,25 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { GameType, InTurnPlayer, ScoreboardRowName } from '../types';
+import { GameType, ScoreboardRowName, UserType } from '../types';
 
 const useStyles = makeStyles(() => ({
     container: {
-        flex: 4,
+        flex: 1,
+        display: 'flex',
     },
     content: {
+        flex: 1,
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
     }
 }));
 
 interface Props {
     game: GameType | undefined;
     postScore: (rowName: ScoreboardRowName) => void;
-    inTurn: InTurnPlayer;
+    user: UserType;
 }
 
-const Scorecard: React.FC<Props> = ({ game, postScore, inTurn }) => {
+const Scorecard: React.FC<Props> = ({ game, postScore, user }) => {
     const classes = useStyles();
     
     return (
@@ -36,22 +35,23 @@ const Scorecard: React.FC<Props> = ({ game, postScore, inTurn }) => {
                     </thead>
                     <tbody>
                         {Object.values(ScoreboardRowName).map((name, index) => (
-                            <tr>
-                                <td key={name}>{name.split(/(?=[A-Z])/).join(' ')}</td>
+                            <tr key={name}>
+                                <td>{name.split(/(?=[A-Z])/).join(' ')}</td>
                                 {game.scoreboard.map((column) => 
                                     <td 
+                                        key={column.player.username}
                                         className={
                                             name === ScoreboardRowName.Sum 
                                             || name === ScoreboardRowName.Bonus 
                                             || name === ScoreboardRowName.Total 
                                             || column.rows[index].filled 
-                                            || inTurn.numberOfThrows === 0 
+                                            || game.inTurn.numberOfThrows === 0 
+                                            || column.player.username !== user.username
                                             ? 'centered' : 'selectable'
                                         } 
-                                        key={index}
                                         onClick={
                                             column.rows[index].filled 
-                                            || inTurn.numberOfThrows === 0 
+                                            || game.inTurn.numberOfThrows === 0 
                                             ? undefined : () => postScore(name)
                                         }
                                     > 

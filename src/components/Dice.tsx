@@ -1,45 +1,48 @@
 import React from 'react';
 import { DiceType } from '../types';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-    container: {
-        width: 70,
-        height: 70,
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderRadius: 5 ,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        userSelect: 'none',
-        cursor: 'pointer',
-        transformStyle: 'preserve-3d',
-        tansform: 'translateZ(-100px)',
-        transition: 'transform 5s'
-    },
-}));
+import { motion } from 'framer-motion';
 
 interface Props {
     dice: DiceType;
     toggleDiceSelection: () => void;
+    rolling: boolean;
 }
 
-const Dice: React.FC<Props> = ({ dice, toggleDiceSelection }) => {
-    const classes = useStyles();
-
-    const selectedStyle = {
-        borderColor: dice.selected ? '#1f70f2' : ''
+const Dice: React.FC<Props> = ({ dice, toggleDiceSelection, rolling }) => {
+    const variants = {
+        initial: { y: 0 },
+        animate: { y: -100 }
     }
-
+    
     return (
-        <div 
-            className={classes.container} 
-            style={selectedStyle}
-            onClick={toggleDiceSelection}
+        <motion.div
+            initial={{ rotate: 0 }}
+            animate={rolling ? { rotate: 360 } : { rotate: 0 }}
+            transition={{ duration: 0.5 }}
         >
-            {dice.value}
-        </div>
+            <motion.div 
+                style={{
+                    width: 70,
+                    height: 70,
+                    borderWidth: 1,
+                    borderStyle: 'solid',
+                    borderRadius: 5,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    userSelect: 'none',
+                    cursor: 'pointer',
+                    borderColor: dice.selected ? '#1f70f2' : ''
+                }}
+                initial="initial"
+                animate={dice.selected ? 'animate' : 'initial'}
+                variants={variants}
+                whileHover={{ scale: 1.2 }}
+                onClick={toggleDiceSelection}
+            >
+                {dice.value}
+            </motion.div>
+        </motion.div>
     );
 };
 

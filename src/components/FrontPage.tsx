@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
         paddingTop: 30,
         paddingBottom: 30,
     }
-}))
+}));
 
 const FrontPage: React.FC = () => {
     const classes = useStyles();

@@ -53,6 +53,7 @@ export interface DiceType {
 export interface InTurnPlayer {
     player: UserType;
     numberOfThrows: number;
+    rolling: boolean;
 }
 
 export interface ChatMessage {
@@ -68,6 +69,7 @@ export interface GameType {
     inTurn: InTurnPlayer;
     status: GameStatus;
     messages: ChatMessage[];
+    createdAt: number;
 }
 
 export interface SignUpValues {
@@ -84,4 +86,9 @@ export interface JoinGameValues {
 
 export interface SendMessageValues {
     message: string;
+}
+
+export interface LobbyType {
+    users: UserType[];
+    messages: ChatMessage[];
 }

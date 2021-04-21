@@ -10,7 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'; 
 import Sun from '@material-ui/icons/Brightness7';
 import Moon from '@material-ui/icons/Brightness3';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -36,6 +36,7 @@ const TopNav: React.FC<Props> = ({ darkTheme, toggleTheme, user, signOut }) => {
     const classes = useStyles();
     const [menuOpen, setMenuOpen] = useState(false);
     const anchorRef = useRef<HTMLButtonElement>(null);
+    const history = useHistory();
 
     const toggleMenu = () => {
         setMenuOpen(prev => !prev);
@@ -113,6 +114,8 @@ const TopNav: React.FC<Props> = ({ darkTheme, toggleTheme, user, signOut }) => {
                                                 onKeyDown={handleListKeyDown}
                                                 id="menu-list-grow"
                                             >
+                                                <MenuItem onClick={() => history.push(`/profile/${user.username}`)} >Profile</MenuItem>
+                                                <MenuItem onClick={() => history.push('/games')}>My Games</MenuItem>
                                                 <MenuItem onClick={signOut} >Sign Out</MenuItem>
                                             </MenuList>
                                         </ClickAwayListener>

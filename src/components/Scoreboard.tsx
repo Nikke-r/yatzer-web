@@ -42,7 +42,7 @@ const Scoreboard: React.FC<Props> = ({ game, toggleDiceSelection, rollDices, pos
                 <Scorecard 
                     game={game} 
                     postScore={postScore}
-                    inTurn={game.inTurn}
+                    user={user!}
                 />
                 <DiceContainer 
                     toggleDiceSelection={toggleDiceSelection} 

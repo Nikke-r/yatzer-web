@@ -1,6 +1,4 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Center from './Center';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { GameType, JoinGameValues, UserType } from '../types';
@@ -11,17 +9,30 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/client';
 import { CREATE_GAME, JOIN_GAME } from '../graphql/mutations';
+import useAppNotifications from '../hooks/useAppNotifications';
+import AppNotification from './AppNotification';
 
 const useStyles = makeStyles(() => ({
+    container: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        marginLeft: '30rem',
+        marginRight: '30rem',
+        padding: 30,
+    },
     content: {
         display: 'flex',
         flexDirection: 'inherit',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        height: '50%'
+        flex: 2
     },
     form: {
         width: '100%'
+    },
+    button: {
+        height: 70
     }
 }));
 
@@ -46,8 +57,9 @@ interface JoinGameResponse {
 }
 
 const GameForm: React.FC<Props> = ({ user }) => {
-    const [createGame] = useMutation<CreateGameResponse>(CREATE_GAME);
-    const [joinGame] = useMutation<JoinGameResponse>(JOIN_GAME);
+    const { handleNotification, notification } = useAppNotifications();
+    const [createGame] = useMutation<CreateGameResponse>(CREATE_GAME, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
+    const [joinGame] = useMutation<JoinGameResponse>(JOIN_GAME, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
     const classes = useStyles();
     const history = useHistory();
     const formik = useFormik({
@@ -81,55 +93,65 @@ const GameForm: React.FC<Props> = ({ user }) => {
     }
 
     return (
-        <Container maxWidth="xs">
-            <Center>
-                {user ?
-                <div className={classes.content}>
-                    <Typography variant="h4">
-                        Nice to see you {user.username}!
-                    </Typography>
-                    <Typography variant="h6">
-                        What you want to do?
-                    </Typography>
+        <div className={classes.container}>
+            {user ?
+            <div className={classes.content}>
+                <Typography variant="h4">
+                    Nice to see you {user.username}!
+                </Typography>
+                <Typography variant="h6">
+                    What you want to do?
+                </Typography>
+                <Button 
+                    fullWidth 
+                    variant="outlined" 
+                    onClick={handleGameCreation}
+                    className={classes.button}
+                >
+                    Create a new Game
+                </Button>
+                <Typography variant="h6">
+                    Or
+                </Typography>
+                <form onSubmit={formik.handleSubmit} className={classes.form}>
+                    <TextField 
+                        id="slug"
+                        label="Slug"
+                        name="slug"
+                        required
+                        fullWidth
+                        onChange={formik.handleChange}
+                        error={formik.touched.slug && Boolean(formik.errors.slug)}
+                        helperText={formik.touched.slug && formik.errors.slug}
+                        value={formik.values.slug}
+                        variant="outlined"
+                        style={{ marginBottom: 7 }}
+                    />
                     <Button 
+                        type="submit" 
                         fullWidth 
-                        variant="outlined" 
-                        onClick={handleGameCreation}
+                        variant="outlined"
+                        className={classes.button}
                     >
-                        Create a new Game
+                        Join a Room
                     </Button>
-                    <Typography variant="h6">
-                        Or
-                    </Typography>
-                    <form onSubmit={formik.handleSubmit} className={classes.form}>
-                        <TextField 
-                            id="slug"
-                            label="Slug"
-                            name="slug"
-                            required
-                            fullWidth
-                            onChange={formik.handleChange}
-                            error={formik.touched.slug && Boolean(formik.errors.slug)}
-                            helperText={formik.touched.slug && formik.errors.slug}
-                            value={formik.values.slug}
-                            variant="outlined"
-                            style={{ marginBottom: 7 }}
-                        />
-                        <Button type="submit" fullWidth variant="outlined">
-                            Join a Room
-                        </Button>
-                    </form>
-                    <Typography variant="h6">
-                        Or
-                    </Typography>
-                    <Button fullWidth variant="outlined" onClick={() => history.push('/games')}>
-                        Check your games
-                    </Button>
-                </div>
-                :
-                <Redirect to="/signIn" />}
-            </Center>
-        </Container>
+                </form>
+                <Typography variant="h6">
+                    Or
+                </Typography>
+                <Button 
+                    fullWidth 
+                    variant="outlined" 
+                    onClick={() => history.push('/games')}
+                    className={classes.button}
+                >
+                    Check your games
+                </Button>
+            </div>
+            :
+            <Redirect to="/signIn" />}
+            {notification && <AppNotification notification={notification} />}
+        </div>
     );
 };
 

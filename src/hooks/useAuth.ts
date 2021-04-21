@@ -21,12 +21,12 @@ interface CurrentUserType {
 }
 
 const useAuth = () => {
-    const { handleNotification } = useAppNotifications();
+    const { handleNotification, notification } = useAppNotifications();
     const [user, setUser] = useState<UserType>();
     const currentUser = useQuery<CurrentUserType>(CURRENT_USER, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
     const [signInQuery, signInResult] = useLazyQuery<SignInType>(SIGN_IN, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
     const [signUpMutation, signUpResult] = useMutation<SignUpType>(SIGN_UP, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
-    useSubscription(USER_DATA_CHANGED, { variables: { username: user?.username } ,onSubscriptionData: ({ subscriptionData }) => console.log(subscriptionData)});
+    useSubscription(USER_DATA_CHANGED, { variables: { username: user?.username }, onSubscriptionData: ({ subscriptionData }) => setUser(subscriptionData.data.userDataChanged)});
     const history = useHistory();
     const client = useApolloClient();
 
@@ -54,7 +54,7 @@ const useAuth = () => {
             await client.resetStore();
             history.push('/');
         } catch (error) {
-            console.log(`Èrror while signing out: ${error.message}`);
+            handleNotification(error.message, 5);
         }
     }
 
@@ -79,7 +79,8 @@ const useAuth = () => {
         signIn,
         signOut,
         user,
-        authLoading: currentUser.loading || signInResult.loading || signUpResult.loading
+        authLoading: currentUser.loading || signInResult.loading || signUpResult.loading,
+        authError: notification,
     };
 };
 

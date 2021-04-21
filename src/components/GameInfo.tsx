@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { GameType } from '../types';
 import Typography from '@material-ui/core/Typography';
 import AppBarSpacer from './AppBarSpacer';
-import IconButton from '@material-ui/core/IconButton';
-import FileCopy from '@material-ui/icons/FileCopy';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -32,9 +30,6 @@ const GameInfo: React.FC<Props> = ({ game }) => {
                 <Typography variant="body1">
                     Room Code: {game?.slug}
                 </Typography>
-                <IconButton onClick={() => navigator.clipboard.writeText(`http://localhost:3000/join/${game?.slug}`)}>
-                    <FileCopy />
-                </IconButton>
                 <Typography variant="body1">
                     Satus: {game?.status}
                 </Typography>

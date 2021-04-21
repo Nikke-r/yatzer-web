@@ -15,6 +15,7 @@ export const CREATE_GAME = gql`
     mutation CreateGame {
         createGame {
             slug
+            createdAt
             scoreboard {
                 player {
                     username
@@ -53,6 +54,7 @@ export const JOIN_GAME = gql`
             slug: $slug
         ) {
             slug
+            createdAt
             scoreboard {
                 player {
                     username
@@ -92,6 +94,7 @@ export const TOGGLE_DICE_SELECTION = gql`
             diceIndex: $diceIndex
         ) {
             slug
+            createdAt
             scoreboard {
                 player {
                     username
@@ -130,6 +133,7 @@ export const ROLL_DICES = gql`
             slug: $slug
         ) {
             slug
+            createdAt
             scoreboard {
                 player {
                     username
@@ -169,6 +173,7 @@ export const POST_SCORE = gql`
             rowName: $rowName
         ) {
             slug
+            createdAt
             scoreboard {
                 player {
                     username
@@ -208,6 +213,7 @@ export const SEND_MESSAGE = gql`
             message: $message
         ) {
             slug
+            createdAt
             scoreboard {
                 player {
                     username
@@ -235,6 +241,59 @@ export const SEND_MESSAGE = gql`
                     username
                 }
                 numberOfThrows
+            }
+        }
+    }
+`;
+
+export const ADD_USER_TO_LOBBY = gql`
+    mutation AddUser {
+        addUser {
+            users {
+                username
+            }
+            messages {
+                user {
+                    username
+                }
+                message
+                timestamp
+            }
+        }
+    }
+`;
+
+export const REMOVE_USER_FROM_LOBBY = gql`
+    mutation RemoveUser {
+        removeUser {
+            users {
+                username
+            }
+            messages {
+                user {
+                    username
+                }
+                message
+                timestamp
+            }
+        }
+    }
+`;
+
+export const SEND_MESSAGE_TO_LOBBY = gql`
+    mutation SendMessage($message: String!) {
+        sendMessage(
+            message: $message
+        ) {
+            users {
+                username
+            }
+            messages {
+                user {
+                    username
+                }
+                message
+                timestamp
             }
         }
     }

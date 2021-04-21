@@ -9,12 +9,13 @@ import 'fontsource-roboto';
 import SignUpForm from './components/SignUpForm';
 import { Switch, Route } from 'react-router-dom';
 import SignInForm from './components/SignInForm';
-import GameForm from './components/GameForm';
 import Game from './components/Game';
 import GamesList from './components/GamesList';
 import FrontPage from './components/FrontPage';
 import Center from './components/Center';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Lobby from './components/Lobby';
+import Profile from './components/Profile';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -45,9 +46,8 @@ const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Switch>
+            <CssBaseline />
                 <div className={classes.root}>
-                    <CssBaseline />
                     <TopNav 
                         darkTheme={darkTheme}
                         toggleTheme={toggleTheme}
@@ -61,21 +61,22 @@ const App = () => {
                         </Center>
                         :
                         user ?
-                        <>
+                        <Switch>
                             <Route exact path="/">
-                                <GameForm user={user} />
+                                <Lobby user={user} />
                             </Route>
                             <Route path="/game/:id">
                                 <Game user={user} />
                             </Route>
                             <Route path='/games'>
-                                <GamesList 
-                                    games={user.games}
-                                />
+                                <GamesList games={user.games} />
                             </Route>
-                        </>
+                            <Route path="/profile/:id">
+                                <Profile />
+                            </Route>
+                        </Switch>
                         :
-                        <>
+                        <Switch>
                             <Route exact path="/">
                                 <FrontPage />
                             </Route>
@@ -89,10 +90,9 @@ const App = () => {
                                     signUp={signUp}
                                 />
                             </Route>
-                        </>}
+                        </Switch>}
                     </main>
                 </div>
-            </Switch>
         </ThemeProvider>
     );
 }

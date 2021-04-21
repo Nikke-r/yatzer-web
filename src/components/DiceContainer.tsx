@@ -3,21 +3,30 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DiceType, GameStatus, InTurnPlayer, UserType } from '../types';
 import Dice from './Dice';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
+import AppBarSpacer from './AppBarSpacer';
 
 const useStyles = makeStyles(() => ({
     container: {
-        flexGrow: 1,
+        flex: 1,
         display: 'flex'
     },
     content: {
         flexGrow: 1,
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        justifyContent: 'space-evenly'
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
     rollBtn: {
-        height: 70
+        height: 70,
+        width: '100%',
+        marginTop: 50
+    },
+    dices: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-evenly'
     }
 }));
 
@@ -33,18 +42,30 @@ interface Props {
 const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices, user, inTurn, status }) => {
     const classes = useStyles();
 
+
     return (
         <div className={classes.container}>
-            <div className={classes.content}>
-                {dices.map((dice, index) => <Dice key={index} toggleDiceSelection={() => toggleDiceSelection(index)} dice={dice} />)}
-                {inTurn.numberOfThrows < 3 && inTurn.player.username === user?.username && status !== GameStatus.Ended &&
+            <div className={classes.content}>  
+                <div>
+                    <AppBarSpacer />
+                    <Typography variant="h4">
+                        Current player: {inTurn.player.username} 
+                    </Typography>
+                    <Typography>
+                        Number of throws: {inTurn.numberOfThrows}
+                    </Typography>
+                </div>
+                <div className={classes.dices}>
+                    {dices.map((dice, index) => <Dice rolling={inTurn.rolling} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
+                </div>
                 <Button 
                     variant="outlined"
                     className={classes.rollBtn}
                     onClick={rollDices}
+                    disabled={inTurn.numberOfThrows >= 3 || inTurn.player.username !== user!.username || status === GameStatus.Ended}
                 >
-                    Roll!
-                </Button>}
+                    Roll dices!
+                </Button>
             </div>
         </div>
     );

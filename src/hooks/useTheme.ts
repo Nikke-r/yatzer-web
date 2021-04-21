@@ -1,5 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const useTheme = () => {
     const [darkTheme, setDarkTheme] = useState(true);
@@ -9,6 +9,15 @@ const useTheme = () => {
             type: darkTheme ? 'dark' : 'light',
         },
     });
+
+    useEffect(() => {
+        const theme = localStorage.getItem('theme');
+        setDarkTheme(theme === 'dark' ? true : false);
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
+    }, [darkTheme]);
 
     const toggleTheme = () => {
         setDarkTheme(!darkTheme);

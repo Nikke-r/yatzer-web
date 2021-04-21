@@ -6,7 +6,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import AppBarSpacer from './AppBarSpacer';
-import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -15,6 +14,7 @@ const useStyles = makeStyles(() => ({
         maxHeight: '100vh',
         alignItems: 'center',
         flexDirection: 'column',
+        padding: 30
     },
     wrapper: {
         display: 'flex',
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
         flexGrow: 1,
         overflowY: 'auto',
         overflowX: 'hidden',
-        width: '100%'
+        width: '50%'
     }
 }));
 
@@ -65,7 +65,7 @@ const GamesList: React.FC<Props> = ({ games }) => {
         <div className={classes.container}>
             <AppBarSpacer />
             <Typography variant="h4">
-                Your Games
+                Your Games ({games.length})
             </Typography>
             <Tabs
                 value={value}
@@ -76,14 +76,13 @@ const GamesList: React.FC<Props> = ({ games }) => {
                 <Tab label="Running" />
                 <Tab label="Ended" />
             </Tabs>
-            <Container maxWidth="lg" className={classes.wrapper}>
+                {games.length > 0 ?
                 <div className={classes.content}>
-                    {games.length > 0 ?
-                    filteredGames().map(game => <GamesListItem game={game} />)
-                    :
-                    <p>You have not started or played any games yet!</p>}
+                    {filteredGames().map(game => <GamesListItem key={game.createdAt} game={game} />)}
                 </div>
-            </Container>
+                :
+                <p style={{ paddingTop: 30 }}>You havent started or joined to any games yet!</p>}
+
         </div>
     );
 };

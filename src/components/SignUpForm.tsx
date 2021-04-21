@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import Center from './Center';
 
 const validationSchema = Yup.object({
-    username: Yup.string().min(3).required('This field is required'),
+    username: Yup.string().min(3).max(15).required('This field is required'),
     password: Yup.string().min(5).required('This field is required'),
     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords does not match'),
 });

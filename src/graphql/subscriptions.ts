@@ -6,6 +6,7 @@ export const GAME_DATA_CHANGED = gql`
             slug: $slug
         ) {
             slug
+            createdAt
             scoreboard {
                 player {
                     username
@@ -33,6 +34,7 @@ export const GAME_DATA_CHANGED = gql`
                     username
                 }
                 numberOfThrows
+                rolling
             }
         }
     }
@@ -47,6 +49,7 @@ export const USER_DATA_CHANGED = gql`
             createdAt
             games {
                 slug
+                createdAt
                 scoreboard {
                     player {
                         username

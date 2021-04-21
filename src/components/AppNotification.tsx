@@ -9,12 +9,14 @@ const AppNotification: React.FC<Props> = ({ notification }) => {
     return (
         <Snackbar
             anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left'
+                vertical: 'top',
+                horizontal: 'center'
             }}
             open={Boolean(notification)}
         >
-            <p>{notification}</p>
+            <p>
+                {notification}
+            </p>
         </Snackbar>
     );
 };

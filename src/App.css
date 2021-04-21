@@ -20,33 +20,3 @@ td, th {
 .selectable:hover {
   background-color: #595959;
 }
-
-
-/**
-  width: 70,
-  height: 70,
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderRadius: 5 ,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  userSelect: 'none',
-  cursor: 'pointer',
-  transformStyle: 'preserve-3d',
-  tansform: 'translateZ(-100px)',
-  transition: 'transform 5s'
-*/
-.dice {
-  width: 70px;
-  height: 70px;
-  border: 1px solid;
-  border-radius: 5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  transition: transform 5s;
-}

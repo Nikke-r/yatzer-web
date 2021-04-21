@@ -15,8 +15,13 @@ const useStyles = makeStyles(() => ({
         borderRadius: 5,
         padding: 10,
         display: 'flex'
+    },
+    info: {
+        flexGrow: 1,
+        display: 'flex',
+        justifyContent: 'space-evenly'
     }
-}))
+}));
 
 interface Props {
     game: GameType;
@@ -27,7 +32,11 @@ const GamesListItem: React.FC<Props> = ({ game }) => {
     return (
         <div className={classes.container} >
             <div className={classes.content}>
-                <p style={{flexGrow: 1}}>Number of players: {game.scoreboard.length}</p>
+                <div className={classes.info}>
+                    <p>Creation Date: {new Date(game.createdAt).toLocaleDateString()}</p>
+                    <p >Number of players: {game.scoreboard.length}</p>
+                    <p >Slug: {game.slug}</p>
+                </div>
                 <Button>
                     <Link to={`/game/${game.slug}`} style={{ textDecoration: 'none', color: 'inherit'}}>
                         open game

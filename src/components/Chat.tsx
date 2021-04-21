@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBarSpacer from './AppBarSpacer';
 import Typography from '@material-ui/core/Typography';
@@ -17,10 +17,10 @@ const useStyles = makeStyles(() => ({
         maxHeight: '100vh',
     },
     content: {
-        padding: 30,
         display: 'flex',
         flexDirection: 'column',
         flexGrow: 1,
+        padding: 30,
     },
     wrapper: {
         flexGrow: 1,
@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
 
 const validationSchema = Yup.object({
     message: Yup.string().min(2).max(50).required('This field cannot be empty')
-})
+});
 
 const initialValues: SendMessageValues = {
     message: ''
@@ -51,6 +51,7 @@ interface Props {
 }
 
 const Chat: React.FC<Props> = ({ messages, sendMessage }) => {
+    const chatBottomRef = useRef<HTMLDivElement>(null);
     const classes = useStyles();
     const formik = useFormik({
         initialValues,
@@ -61,6 +62,12 @@ const Chat: React.FC<Props> = ({ messages, sendMessage }) => {
         }
     });
 
+    useEffect(() => {
+        if (chatBottomRef.current) {
+            chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
+
     return (
         <div className={classes.container}>
             <div className={classes.content}>     
@@ -70,9 +77,10 @@ const Chat: React.FC<Props> = ({ messages, sendMessage }) => {
                 </Typography>
                 <div className={classes.wrapper}>
                     {messages.length > 0 ?
-                    messages.map(message => <ChatBubble message={message} />)
+                    messages.map(message => <ChatBubble key={message.timestamp} message={message} />)
                     :
                     <p>No messages</p>}
+                    <div ref={chatBottomRef} />
                 </div>
                 <div>
                 <form onSubmit={formik.handleSubmit} className={classes.form}>
