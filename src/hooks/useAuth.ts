@@ -3,81 +3,81 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { SIGN_UP } from "../graphql/mutations";
 import { CURRENT_USER, SIGN_IN } from "../graphql/queries";
-import { USER_DATA_CHANGED } from "../graphql/subscriptions";
-import { SignInValues, SignUpValues, UserType } from "../types";
+import { SignUpValues, UserType } from "../types";
 import useAppNotifications from "./useAppNotifications";
 import { useApolloClient } from '@apollo/client';
+import { USER_DATA_CHANGED } from "../graphql/subscriptions";
 
-interface SignInType {
+interface SignInQuery {
     signIn: UserType;
 }
 
-interface SignUpType {
+interface SignUpMutation {
     signUp: UserType;
 }
 
-interface CurrentUserType {
+interface CurrentUserQuery {
     currentUser: UserType;
 }
 
 const useAuth = () => {
+    const client = useApolloClient();
+    const history = useHistory();
     const { handleNotification, notification } = useAppNotifications();
     const [user, setUser] = useState<UserType>();
-    const currentUser = useQuery<CurrentUserType>(CURRENT_USER, { onError: ({ graphQLErrors }) => handleNotification('paskaa', 5)});
-    const [signInQuery, signInResult] = useLazyQuery<SignInType>(SIGN_IN, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
-    const [signUpMutation, signUpResult] = useMutation<SignUpType>(SIGN_UP, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
-    useSubscription(USER_DATA_CHANGED, { variables: { username: user?.username }, onSubscriptionData: ({ subscriptionData }) => setUser(subscriptionData.data.userDataChanged)});
-    const history = useHistory();
-    const client = useApolloClient();
+    const getCurrentUser = useQuery<CurrentUserQuery>(CURRENT_USER);
+    const [signUp, signUpLoading] = useMutation<SignUpMutation>(SIGN_UP);
+    const [signIn, signInLoading] = useLazyQuery<SignInQuery>(SIGN_IN, {
+        onCompleted: data => {
+            localStorage.setItem('token', data.signIn.token!);
+            setUser(data.signIn);
+            history.push('/');
+        },
+        onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message || 'Something went wrong', 5),
+    });
+    useSubscription(USER_DATA_CHANGED, { variables: { username: user?.username }, onSubscriptionData: ({ subscriptionData }) => setUser(subscriptionData.data.userDataChanged) });
 
-    const signUp = async (values: SignUpValues) => {
+    const handleSignUp = async (values: SignUpValues) => {
         try {
-            const { data } = await signUpMutation({ variables: { username: values.username, password: values.password }});
+            const { data, errors } = await signUp({ variables: { username: values.username, password: values.password }});
+
+            if (errors) {
+                handleNotification(errors[0].message || 'Something went wrong', 5);
+            }
 
             if (data && data.signUp) {
-                signIn({ username: values.username, password: values.password });
+                signIn({ variables: { username: values.username, password: values.password }});
             }
         } catch (error) {
-            handleNotification(error.message, 5);
+            handleNotification(error || 'Something went wrong', 5);
         }
     }
 
-    const signIn = (values: SignInValues) => {
-        signInQuery({ variables: values });
-    };
-
-    const signOut =  () => {
-        localStorage.removeItem('token');
-        client.resetStore();
-        setUser(undefined);
-        history.push('/');
+    const signOut = async () => {
+        try {
+            await client.resetStore();
+            localStorage.removeItem('token');
+            setUser(undefined);
+            history.push('/');
+        } catch (error) {
+            handleNotification(error || 'Something went wrong', 5)
+        }
     }
 
     useEffect(() => {
-        if (currentUser.data) {
-            setUser(currentUser.data.currentUser);
+        if (getCurrentUser.data && getCurrentUser.data.currentUser) {
+            setUser(getCurrentUser.data.currentUser);
         }
-    }, [currentUser]);
-
-    useEffect(() => {
-        if (signInResult.data) {
-            setUser(signInResult.data.signIn);
-
-            if (signInResult.data.signIn.token) {
-                localStorage.setItem('token', signInResult.data.signIn.token);          
-                history.push('/');
-            }
-        }
-    }, [signInResult, history]);
+    }, [getCurrentUser]);
 
     return {
-        signUp,
-        signIn,
-        signOut,
         user,
-        authLoading: currentUser.loading || signInResult.loading || signUpResult.loading,
+        signIn,
+        handleSignUp,
+        signOut,
         authError: notification,
-    };
+        authLoading: getCurrentUser.loading || signUpLoading.loading || signInLoading.loading
+    }
 };
 
 export default useAuth;

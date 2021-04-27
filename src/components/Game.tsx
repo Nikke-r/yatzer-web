@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UserType } from '../types';
 import { useLocation } from 'react-router';
 import useGame from '../hooks/useGame';
@@ -10,6 +10,8 @@ import Scorecard from './Scorecard';
 import DiceContainer from './DiceContainer';
 import AppBarSpacer from './AppBarSpacer';
 import AppNotification from './AppNotification';
+import GameMenu from './GameMenu';
+import InvitationModal from './InvitationModal';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -39,6 +41,7 @@ interface Props {
 }
 
 const Game: React.FC<Props> = ({ user }) => {
+    const [invitationModalOpen, setInvitationModalOpen] = useState(false);
     const classes = useStyles();
     const location = useLocation();
     const { 
@@ -48,8 +51,13 @@ const Game: React.FC<Props> = ({ user }) => {
         postScore,
         sendMessage,
         gameLoading,
-        gameErrors
+        gameErrors,
+        handleUserSelection,
+        handleGameInvitation
     } = useGame(location.pathname.split('/')[2]);
+
+    const openModal = () => setInvitationModalOpen(true);
+    const closeModal = () => setInvitationModalOpen(false);
 
     return (
         <div className={classes.container}>
@@ -58,13 +66,19 @@ const Game: React.FC<Props> = ({ user }) => {
                 <CircularProgress />
             </Center>
             :
-            game &&
+            game && user &&
             <>
                 <div className={classes.left}>
                     <AppBarSpacer />
-                    <Typography variant="h4" style={{ paddingBottom: 20 }}>
-                        Room Code: {game.slug}
+                    <div style={{ display: 'flex', alignItems: 'center', paddingBottom: 20 }}>
+                    <Typography variant="h4" style={{ marginRight: 5 }}>
+                        Room Code: 
                     </Typography>
+                    <GameMenu 
+                        slug={game.slug}
+                        openModal={openModal}
+                    />
+                    </div>
                     <Scorecard 
                         game={game}
                         postScore={postScore}
@@ -87,6 +101,13 @@ const Game: React.FC<Props> = ({ user }) => {
                         sendMessage={sendMessage}
                     />
                 </div>
+                <InvitationModal 
+                    open={invitationModalOpen} 
+                    closeModal={closeModal} 
+                    friends={user.friends} 
+                    handleUserSelection={handleUserSelection}
+                    handleGameInvitation={handleGameInvitation}
+                />
             </>}
             {gameErrors && <AppNotification notification={gameErrors} />}
         </div>

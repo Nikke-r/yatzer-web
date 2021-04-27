@@ -8,10 +8,24 @@ export const SIGN_IN = gql`
         ) {
             username
             token
+            avatarUrl
             createdAt
-            games {
+            friends {
+                username
+                avatarUrl
+            }
+            notifications {
+                from {
+                    username
+                    avatarUrl
+                }
+                type
+                id
                 slug
-                createdAt
+            }
+            games {
+                id
+                slug
                 scoreboard {
                     player {
                         username
@@ -26,19 +40,20 @@ export const SIGN_IN = gql`
                     value
                     selected
                 }
-                status
-                messages {
-                    timestamp
-                    message
-                    user {
-                        username
-                }
-                }
                 inTurn {
                     player {
                         username
                     }
                     numberOfThrows
+                }
+                status
+                createdAt
+                messages {
+                    user {
+                        username
+                    }
+                    message
+                    timestamp
                 }
             }
         }
@@ -48,26 +63,25 @@ export const SIGN_IN = gql`
 export const CURRENT_USER = gql`
     query CurrentUser {
         currentUser {
+            username
+            avatarUrl
+            createdAt
+            friends {
+                username
+                avatarUrl
+            }
             notifications {
+                id
                 from {
                     username
+                    avatarUrl
                 }
-                message
-            }
-            username
-            token
-            createdAt
-            status
-            games {
+                type
                 slug
-                status
-                createdAt
-                inTurn {
-                    player {
-                        username
-                    }
-                    numberOfThrows
-                }
+            }
+            games {
+                id
+                slug
                 scoreboard {
                     player {
                         username
@@ -79,17 +93,36 @@ export const CURRENT_USER = gql`
                     }
                 }
                 dices {
-                    selected
                     value
+                    selected
                 }
+                inTurn {
+                    player {
+                        username
+                    }
+                    numberOfThrows
+                }
+                status
+                createdAt
                 messages {
-                    timestamp
-                    message
                     user {
                         username
                     }
+                    message
+                    timestamp
                 }
             }
+        }
+    }
+`;
+
+export const GET_ALL_USERS = gql`
+    query GetAllUsers($username: String!) {
+        getAllUsers(
+            username: $username
+        ) {
+            avatarUrl
+            username
         }
     }
 `;
@@ -99,8 +132,8 @@ export const GET_GAME = gql`
         getGame(
             slug: $slug
         ) {
+            id
             slug
-            createdAt
             scoreboard {
                 player {
                     username
@@ -115,162 +148,22 @@ export const GET_GAME = gql`
                 value
                 selected
             }
-            status
-            messages {
-                timestamp
-                message
-                user {
-                    username
-            }
-            }
             inTurn {
                 player {
                     username
                 }
                 numberOfThrows
             }
-        }
-    }
-`;
-
-export const GET_USER = gql`
-    query GetUser($username: String!) {
-        getUser(
-            username: $username
-        ) {
-            username
-            createdAt
             status
-            games {
-                slug
-                status
-                inTurn {
-                    player {
-                        username
-                    }
-                    numberOfThrows
-                }
-                scoreboard {
-                    player {
-                        username
-                    }
-                    rows {
-                        name
-                        filled
-                        score
-                    }
-                }
-                dices {
-                    selected
-                    value
-                }
-                messages {
-                    timestamp
-                    message
-                    user {
-                        username
-                    }
-                }
-            }
-        }
-    }
-`;
-
-export const GET_ALL_USERS = gql`
-    query GetAllUsers {
-        getAllUsers {
-            username
             createdAt
-            status
-            games {
-                slug
-                status
-                inTurn {
-                    player {
-                        username
-                    }
-                    numberOfThrows
-                }
-                scoreboard {
-                    player {
-                        username
-                    }
-                    rows {
-                        name
-                        filled
-                        score
-                    }
-                }
-                dices {
-                    selected
-                    value
-                }
-                messages {
-                    timestamp
-                    message
-                    user {
-                        username
-                    }
-                }
-            }
-        }
-    }
-`;
-
-export const GET_ONLINE_USERS = gql`
-    query GetOnlineUsers {
-        getOnlineUsers {
-            username
-            createdAt
-            status
-            games {
-                slug
-                status
-                inTurn {
-                    player {
-                        username
-                    }
-                    numberOfThrows
-                }
-                scoreboard {
-                    player {
-                        username
-                    }
-                    rows {
-                        name
-                        filled
-                        score
-                    }
-                }
-                dices {
-                    selected
-                    value
-                }
-                messages {
-                    timestamp
-                    message
-                    user {
-                        username
-                    }
-                }
-            }
-        }
-    }
-`;
-
-export const GET_LOBBY = gql`
-    query GetLobby {
-        getLobby {
-            users {
-                username
-            }
             messages {
-                timestamp
-                message
                 user {
                     username
                 }
+                message
+                timestamp
             }
         }
     }
 `;
+

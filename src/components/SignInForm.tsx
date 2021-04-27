@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import AppNotification from './AppNotification';
+import { QueryLazyOptions, OperationVariables } from '@apollo/client';
 
 const validationSchema = Yup.object({
     username: Yup.string().required('This field is required'),
@@ -20,7 +21,7 @@ const initialValues: SignInValues = {
 };
 
 interface Props {
-    signIn: (values: SignInValues) => void;
+    signIn: (options?: QueryLazyOptions<OperationVariables> | undefined) => void;
     authError: string | undefined;
 }
 
@@ -28,7 +29,7 @@ const SignInForm: React.FC<Props> = ({ signIn, authError }) => {
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: values => signIn(values)
+        onSubmit: values => signIn({ variables: { ...values }})
     });
 
     return (

@@ -36,6 +36,7 @@ export const CREATE_GAME = gql`
                 message
                 user {
                     username
+                    avatarUrl
                 }
             }
             inTurn {
@@ -75,6 +76,7 @@ export const JOIN_GAME = gql`
                 message
                 user {
                     username
+                    avatarUrl
                 }
             }
             inTurn {
@@ -115,6 +117,7 @@ export const TOGGLE_DICE_SELECTION = gql`
                 message
                 user {
                     username
+                    avatarUrl
                 }
             }
             inTurn {
@@ -154,6 +157,7 @@ export const ROLL_DICES = gql`
                 message
                 user {
                     username
+                    avatarUrl
                 }
             }
             inTurn {
@@ -194,6 +198,7 @@ export const POST_SCORE = gql`
                 message
                 user {
                     username
+                    avatarUrl
                 }
             }
             inTurn {
@@ -234,6 +239,7 @@ export const SEND_MESSAGE = gql`
                 message
                 user {
                     username
+                    avatarUrl
                 }
             }
             inTurn {
@@ -246,55 +252,44 @@ export const SEND_MESSAGE = gql`
     }
 `;
 
-export const ADD_USER_TO_LOBBY = gql`
-    mutation AddUser {
-        addUser {
-            users {
-                username
-            }
-            messages {
-                user {
-                    username
-                }
-                message
-                timestamp
-            }
-        }
-    }
-`;
-
-export const REMOVE_USER_FROM_LOBBY = gql`
-    mutation RemoveUser {
-        removeUser {
-            users {
-                username
-            }
-            messages {
-                user {
-                    username
-                }
-                message
-                timestamp
-            }
-        }
-    }
-`;
-
-export const SEND_MESSAGE_TO_LOBBY = gql`
-    mutation SendMessage($message: String!) {
-        sendMessage(
-            message: $message
+export const SEND_NOTIFICATION = gql`
+    mutation SendNotification($type: NotificationTypes!, $to: [String!]!, $slug: String) {
+        sendNotification(
+            type: $type,
+            to: $to,
+            slug: $slug
         ) {
-            users {
-                username
-            }
-            messages {
-                user {
-                    username
-                }
-                message
-                timestamp
-            }
+            username
+        }
+    }
+`;
+
+export const DISMISS_NOTIFICATION = gql`
+    mutation DismissNotification($id: ID!) {
+        dismissNotification(
+            id: $id
+        ) {
+            username
+        }
+    }
+`;
+
+export const ADD_PROFILE_PICTURE = gql`
+    mutation AddProfilePicture($file: Upload!) {
+        addProfilePicture(
+            file: $file
+        ) {
+            url
+        }
+    }
+`;
+
+export const ACCEPT_FRIEND_REQUEST = gql`
+    mutation AcceptFriendRequest($id: ID!) {
+        acceptFriendRequest(
+            id: $id
+        ) {
+            username
         }
     }
 `;

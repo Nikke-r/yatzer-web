@@ -3,7 +3,21 @@ export interface UserType {
     createdAt: number;
     games: GameType[];
     token?: string;
-    notifications: Notification[];
+    notifications: Notifications[];
+    avatarUrl: string;
+    friends: UserType[];
+}
+
+export enum NotificationTypes {
+    FriendRequest = "FriendRequest",
+    GameInvitation = "GameInvitation",
+}
+
+export interface Notifications {
+    id: string;
+    from: UserType;
+    type: NotificationTypes;
+    slug?: string;
 }
 
 export enum ScoreboardRowName {
@@ -86,15 +100,5 @@ export interface JoinGameValues {
 }
 
 export interface SendMessageValues {
-    message: string;
-}
-
-export interface LobbyType {
-    users: UserType[];
-    messages: ChatMessage[];
-}
-
-export interface Notification {
-    from: UserType;
     message: string;
 }

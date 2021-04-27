@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChatMessage } from '../types';
 import { makeStyles } from '@material-ui/core/styles';
-import AccountImage from '@material-ui/icons/AccountCircle';
+import AvatarImage from './AvatarImage';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -30,8 +30,8 @@ const ChatBubble: React.FC<Props> = ({ message }) => {
     return (
         <div className={classes.container}>
             <div className={classes.messageInfo}>
-                <AccountImage />
-                <p>{message.user.username} {new Date(message.timestamp).toDateString()}</p>
+                <AvatarImage user={message.user} />
+                <p style={{ marginLeft: 10 }}>{message.user.username} {new Date(message.timestamp).toDateString()}</p>
             </div>
             <p>
                 {message.message}

@@ -1,7 +1,8 @@
-import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
+import { ApolloClient, InMemoryCache, split } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { createUploadLink } from 'apollo-upload-client';
 
 const authLink = setContext((_: unknown, { headers }) => {
     const token = localStorage.getItem('token');
@@ -17,7 +18,9 @@ const authLink = setContext((_: unknown, { headers }) => {
 const httpUri = process.env.NODE_ENV === 'production' ? 'https://yatzer-backend.herokuapp.com/graphql' : 'http://localhost:3001/graphql';
 const wsUri = process.env.NODE_ENV === 'production' ? 'wss://yatzer-backend.herokuapp.com/graphql' : 'ws://localhost:3001/graphql';
 
-const httpLink = new HttpLink({ uri: httpUri });
+const httpLink = createUploadLink({
+    uri: httpUri
+});
 
 const webSocketLink = new WebSocketLink({
     uri: wsUri,

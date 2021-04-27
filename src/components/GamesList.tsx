@@ -24,7 +24,8 @@ const useStyles = makeStyles(() => ({
         flexGrow: 1,
         overflowY: 'auto',
         overflowX: 'hidden',
-        width: '50%'
+        width: '50%',
+        scrollbarWidth: 'thin',
     }
 }));
 

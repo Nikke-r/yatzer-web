@@ -15,7 +15,6 @@ import FrontPage from './components/FrontPage';
 import Center from './components/Center';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Lobby from './components/Lobby';
-import Profile from './components/Profile';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -37,12 +36,12 @@ const App = () => {
         theme,
     } = useTheme();
     const {
-        signUp,
-        signIn,
-        signOut,
         user,
-        authLoading,
-        authError
+        signIn,
+        handleSignUp,
+        signOut,
+        authError,
+        authLoading
     } = useAuth();
 
     return (
@@ -72,9 +71,6 @@ const App = () => {
                             <Route path='/games'>
                                 <GamesList games={user.games} />
                             </Route>
-                            <Route path="/profile/:id">
-                                <Profile />
-                            </Route>
                         </Switch>
                         :
                         <Switch>
@@ -89,7 +85,7 @@ const App = () => {
                             </Route>
                             <Route path="/signUp">
                                 <SignUpForm
-                                    signUp={signUp}
+                                    signUp={handleSignUp}
                                     authError={authError}
                                 />
                             </Route>

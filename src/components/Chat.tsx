@@ -26,6 +26,7 @@ const useStyles = makeStyles(() => ({
         flexGrow: 1,
         overflowY: 'auto',
         overflowX: 'hidden',
+        scrollbarWidth: 'thin',
     },
     form: {
         display: 'flex',

@@ -27,6 +27,7 @@ export const GAME_DATA_CHANGED = gql`
                 message
                 user {
                     username
+                    avatarUrl
                 }
             }
             inTurn {
@@ -46,10 +47,24 @@ export const USER_DATA_CHANGED = gql`
             username: $username
         ) {
             username
+            avatarUrl
             createdAt
-            games {
+            friends {
+                username
+                avatarUrl
+            }
+            notifications {
+                from {
+                    username
+                    avatarUrl
+                }
+                type
+                id
                 slug
-                createdAt
+            }
+            games {
+                id
+                slug
                 scoreboard {
                     player {
                         username
@@ -64,19 +79,20 @@ export const USER_DATA_CHANGED = gql`
                     value
                     selected
                 }
-                status
-                messages {
-                    timestamp
-                    message
-                    user {
-                        username
-                    }
-                }
                 inTurn {
                     player {
                         username
                     }
                     numberOfThrows
+                }
+                status
+                createdAt
+                messages {
+                    user {
+                        username
+                    }
+                    message
+                    timestamp
                 }
             }
         }
