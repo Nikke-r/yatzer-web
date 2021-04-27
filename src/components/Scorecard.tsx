@@ -52,6 +52,7 @@ const Scorecard: React.FC<Props> = ({ game, postScore, user }) => {
                                         onClick={
                                             column.rows[index].filled 
                                             || game.inTurn.numberOfThrows === 0 
+                                            || column.player.username !== user.username
                                             ? undefined : () => postScore(name)
                                         }
                                     > 
