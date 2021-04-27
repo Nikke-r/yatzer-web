@@ -33,8 +33,6 @@ const Dice: React.FC<Props> = ({ dice, toggleDiceSelection, rolling }) => {
                     borderStyle: 'solid',
                     borderRadius: 5,
                     display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
                     userSelect: 'none',
                     cursor: 'pointer',
                     borderColor: dice.selected ? '#1f70f2' : ''
@@ -45,7 +43,73 @@ const Dice: React.FC<Props> = ({ dice, toggleDiceSelection, rolling }) => {
                 whileHover={{ scale: 1.2 }}
                 onClick={toggleDiceSelection}
             >
-                {dice.value}
+                {dice.value === 1 ?
+                <div className="center">
+                    <span className="dot" />
+                </div>
+                :
+                dice.value === 2 ?
+                <>
+                    <div className="column">
+                    <span className="dot" />
+                    </div>
+                    <div className="column right bottom">
+                    <span className="dot" />
+                    </div>
+                </>
+                :
+                dice.value === 3 ?
+                <>
+                    <div className="column">
+                    <span className="dot" />
+                    </div>
+                    <div className="center">
+                    <span className="dot" />
+                    </div>
+                    <div className="column right bottom">
+                    <span className="dot" />
+                    </div>
+                </>
+                :
+                dice.value === 4 ?
+                <>
+                    <div className="column">
+                    <span className="dot" />
+                    <span className="dot" />
+                    </div>
+                    <div className="column right">
+                    <span className="dot" />
+                    <span className="dot" />
+                    </div>
+                </>
+                :
+                dice.value === 5 ?
+                <>
+                    <div className="column">
+                    <span className="dot" />
+                    <span className="dot" />
+                    </div>
+                    <div className="center">
+                    <span className="dot" />
+                    </div>
+                    <div className="column right">
+                    <span className="dot" />
+                    <span className="dot" />
+                    </div>
+                </>
+                :
+                <>
+                    <div className="column">
+                    <span className="dot" />
+                    <span className="dot" />
+                    <span className="dot" />
+                    </div>
+                    <div className="column right">
+                    <span className="dot" />
+                    <span className="dot" />
+                    <span className="dot" />
+                    </div>
+                </>}
             </motion.div>
         </motion.div>
     );
