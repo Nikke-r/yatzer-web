@@ -25,7 +25,9 @@ const Lobby: React.FC<Props> = ({ user }) => {
 
     return (
         <div className={classes.container}>
+            <div className={classes.placeholder} />
             <GameForm user={user} />
+            <div className={classes.placeholder} />
         </div>
     );
 };

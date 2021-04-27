@@ -1,6 +1,36 @@
 import React from 'react';
 import { DiceType } from '../types';
 import { motion } from 'framer-motion';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    dot:{
+        display: 'block',
+        width: 10,
+        height: 10,
+        borderRadius: '50%',
+        margin: 5,
+        backgroundColor: theme.palette.type === 'dark' ? 'white' : 'black',
+    },
+    column: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+    },
+    center: {
+        display: 'flex',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    right: {
+        alignItems: 'flex-end'
+    },
+    bottom: {
+        justifyContent: 'flex-end'
+    }
+}));
 
 interface Props {
     dice: DiceType;
@@ -9,6 +39,7 @@ interface Props {
 }
 
 const Dice: React.FC<Props> = ({ dice, toggleDiceSelection, rolling }) => {
+    const classes = useStyles();
     const variants = {
         initial: { y: 0 },
         animate: { y: -100 }
@@ -44,70 +75,70 @@ const Dice: React.FC<Props> = ({ dice, toggleDiceSelection, rolling }) => {
                 onClick={toggleDiceSelection}
             >
                 {dice.value === 1 ?
-                <div className="center">
-                    <span className="dot" />
+                <div className={classes.center}>
+                    <span className={classes.dot} />
                 </div>
                 :
                 dice.value === 2 ?
                 <>
-                    <div className="column">
-                    <span className="dot" />
+                    <div className={classes.column}>
+                        <span className={classes.dot} />
                     </div>
-                    <div className="column right bottom">
-                    <span className="dot" />
+                    <div className={`${classes.column} ${classes.right} ${classes.bottom}`}>
+                        <span className={classes.dot} />
                     </div>
                 </>
                 :
                 dice.value === 3 ?
                 <>
-                    <div className="column">
-                    <span className="dot" />
+                    <div className={classes.column}>
+                        <span className={classes.dot} />
                     </div>
-                    <div className="center">
-                    <span className="dot" />
+                    <div className={classes.center}>
+                        <span className={classes.dot} />
                     </div>
-                    <div className="column right bottom">
-                    <span className="dot" />
+                    <div className={`${classes.column} ${classes.right} ${classes.bottom}`}>
+                        <span className={classes.dot} />
                     </div>
                 </>
                 :
                 dice.value === 4 ?
                 <>
-                    <div className="column">
-                    <span className="dot" />
-                    <span className="dot" />
+                    <div className={classes.column}>
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
                     </div>
-                    <div className="column right">
-                    <span className="dot" />
-                    <span className="dot" />
+                    <div className={`${classes.column} ${classes.right}`}>
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
                     </div>
                 </>
                 :
                 dice.value === 5 ?
                 <>
-                    <div className="column">
-                    <span className="dot" />
-                    <span className="dot" />
+                    <div className={classes.column}>
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
                     </div>
-                    <div className="center">
-                    <span className="dot" />
+                    <div className={classes.center}>
+                        <span className={classes.dot} />
                     </div>
-                    <div className="column right">
-                    <span className="dot" />
-                    <span className="dot" />
+                    <div className={`${classes.column} ${classes.right}`}>
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
                     </div>
                 </>
                 :
                 <>
-                    <div className="column">
-                    <span className="dot" />
-                    <span className="dot" />
-                    <span className="dot" />
+                    <div className={classes.column}>
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
                     </div>
-                    <div className="column right">
-                    <span className="dot" />
-                    <span className="dot" />
-                    <span className="dot" />
+                    <div className={`${classes.column} ${classes.right}`}>
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
+                        <span className={classes.dot} />
                     </div>
                 </>}
             </motion.div>

@@ -21,34 +21,4 @@ td, th {
   background-color: #595959;
 }
 
-.dot {
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
-  margin: 5px;
-}
-
-.column {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.center {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-}
-
-.right {
-  align-items: flex-end;
-}
-
-.bottom {
-  justify-content: flex-end;
-}
 

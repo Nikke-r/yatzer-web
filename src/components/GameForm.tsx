@@ -17,8 +17,6 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         flex: 1,
         flexDirection: 'column',
-        marginLeft: '30rem',
-        marginRight: '30rem',
         padding: 30,
     },
     content: {
@@ -58,8 +56,8 @@ interface JoinGameResponse {
 
 const GameForm: React.FC<Props> = ({ user }) => {
     const { handleNotification, notification } = useAppNotifications();
-    const [createGame] = useMutation<CreateGameResponse>(CREATE_GAME, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
-    const [joinGame] = useMutation<JoinGameResponse>(JOIN_GAME, { onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5)});
+    const [createGame] = useMutation<CreateGameResponse>(CREATE_GAME, { onError: ({ graphQLErrors }) => handleNotification((graphQLErrors[0].message || 'Something went wrong'), 5)});
+    const [joinGame] = useMutation<JoinGameResponse>(JOIN_GAME, { onError: ({ graphQLErrors }) => handleNotification((graphQLErrors[0].message || 'Something went wrong'), 5)});
     const classes = useStyles();
     const history = useHistory();
     const formik = useFormik({
