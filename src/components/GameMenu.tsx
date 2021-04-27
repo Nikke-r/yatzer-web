@@ -8,13 +8,15 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import { GameStatus } from '../types';
 
 interface Props {
     slug: string;
     openModal: () => void;
+    status: GameStatus
 }
 
-const GameMenu: React.FC<Props> = ({ slug, openModal }) => {
+const GameMenu: React.FC<Props> = ({ slug, openModal, status }) => {
     const {
         menuOpen,
         menuAnchorRef,
@@ -33,6 +35,7 @@ const GameMenu: React.FC<Props> = ({ slug, openModal }) => {
                 ref={menuAnchorRef}
                 aria-controls={menuOpen ? 'menu-list-grow' : undefined}
                 aria-haspopup={true}
+                disabled={status !== GameStatus.Created}
             >
                 {slug}
             </Button>

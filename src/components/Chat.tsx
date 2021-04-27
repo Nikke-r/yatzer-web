@@ -73,7 +73,7 @@ const Chat: React.FC<Props> = ({ messages, sendMessage }) => {
         <div className={classes.container}>
             <div className={classes.content}>     
                 <AppBarSpacer />
-                <Typography variant="h4">
+                <Typography variant="h4" style={{ paddingBottom: 20 }}>
                     Chat
                 </Typography>
                 <div className={classes.wrapper}>

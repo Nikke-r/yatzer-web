@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { DiceType, GameStatus, InTurnPlayer, UserType } from '../types';
 import Dice from './Dice';
@@ -27,6 +27,11 @@ const useStyles = makeStyles(() => ({
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-evenly'
+    },
+    upper: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
     }
 }));
 
@@ -41,6 +46,17 @@ interface Props {
 
 const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices, user, inTurn, status }) => {
     const classes = useStyles();
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    useEffect(() => {
+        if (inTurn.numberOfThrows !== 0) {
+            setIsAnimating(true);
+
+            setTimeout(() => {
+                setIsAnimating(false);
+            }, 500);
+        }
+    }, [inTurn.numberOfThrows]);
 
     return (
         <div className={classes.container}>
@@ -55,13 +71,18 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
                     </Typography>
                 </div>
                 <div className={classes.dices}>
-                    {dices.map((dice, index) => <Dice rolling={inTurn.rolling} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
+                    {dices.map((dice, index) => <Dice rolling={isAnimating} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
                 </div>
                 <Button 
                     variant="outlined"
                     className={classes.rollBtn}
                     onClick={rollDices}
-                    disabled={inTurn.numberOfThrows >= 3 || inTurn.player.username !== user!.username || status === GameStatus.Ended || inTurn.rolling}
+                    disabled={
+                        inTurn.numberOfThrows >= 3 
+                        || inTurn.player.username !== user!.username 
+                        || status === GameStatus.Ended 
+                        || inTurn.rolling
+                    }
                 >
                     {inTurn.numberOfThrows >= 3 ? 
                     'Place your score'

@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import Modal from '@material-ui/core/Modal';
-import { UserType } from '../types';
+import { Scoreboard, UserType } from '../types';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -37,9 +37,17 @@ interface Props {
     closeModal: () => void;
     handleUserSelection: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
     handleGameInvitation: () => void;
+    scoreboard: Scoreboard;
 }
 
-const InvitationModal: React.FC<Props> = ({ open, friends, closeModal, handleUserSelection, handleGameInvitation }) => {
+const InvitationModal: React.FC<Props> = ({ 
+    open, 
+    friends, 
+    closeModal, 
+    handleUserSelection, 
+    handleGameInvitation,
+    scoreboard
+}) => {
     const classes = useStyles();
 
     return (
@@ -55,6 +63,7 @@ const InvitationModal: React.FC<Props> = ({ open, friends, closeModal, handleUse
                 <FormControl style={{ padding: 20 }}>
                     <FormGroup>
                         {friends.map(friend => (
+                            !scoreboard.find(column => column.player.username === friend.username) &&
                             <FormControlLabel 
                                 color="primary"
                                 control={<Checkbox onChange={handleUserSelection} name={friend.username} />}

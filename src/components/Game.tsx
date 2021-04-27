@@ -77,6 +77,7 @@ const Game: React.FC<Props> = ({ user }) => {
                     <GameMenu 
                         slug={game.slug}
                         openModal={openModal}
+                        status={game.status}
                     />
                     </div>
                     <Scorecard 
@@ -107,6 +108,7 @@ const Game: React.FC<Props> = ({ user }) => {
                     friends={user.friends} 
                     handleUserSelection={handleUserSelection}
                     handleGameInvitation={handleGameInvitation}
+                    scoreboard={game.scoreboard}
                 />
             </>}
             {gameErrors && <AppNotification notification={gameErrors} />}

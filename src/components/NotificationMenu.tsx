@@ -92,7 +92,7 @@ const NotificationMenu: React.FC<Props> = ({ notifications }) => {
                                                 <Button 
                                                     onClick={async () => {
                                                         await joinGameMutation({ variables: { slug: notification.slug }});
-                                                        await dismissNotification({ variables: { id: notification.id } });
+                                                        await dismissNotification({ variables: { id: notification.id }});
 
                                                         closeMenu();
                                                         history.push(`/game/${notification.slug}`);

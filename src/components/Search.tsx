@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import { NotificationTypes, UserType } from '../types';
 import { useMutation } from '@apollo/client';
 import { SEND_NOTIFICATION } from '../graphql/mutations';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => 
     createStyles({
@@ -109,7 +110,9 @@ const Search: React.FC<Props> = ({ currentUser }) => {
                                 onClickAway={clearSearchInput}
                             >
                                 {loading ?
-                                <CircularProgress />
+                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 5 }}>
+                                    <CircularProgress />
+                                </div>
                                 :
                                 searchResult.length > 0 ?
                                 <List>
@@ -120,20 +123,26 @@ const Search: React.FC<Props> = ({ currentUser }) => {
                                                     <AvatarImage user={result} />
                                                 </ListItemAvatar>
                                                 <ListItemText primary={result.username} />
-                                                {!currentUser.friends.find(friend => friend.username === result.username) && result.username !== currentUser.username &&
+                                                {!currentUser.friends.find(friend => friend.username === result.username) && result.username !== currentUser.username ?
                                                 <Button onClick={() => {
                                                     sendNotification({ variables: { type: NotificationTypes.FriendRequest, to: [result.username] }});
                                                     clearSearchInput();
                                                 }}>
                                                     Add as a friend
-                                                </Button>}
+                                                </Button>
+                                                :
+                                                <Typography style={{ fontStyle: 'italic' }}>
+                                                    Friend    
+                                                </Typography>}
                                             </ListItem>
                                             <Divider />
                                         </>
                                     ))}
                                 </List>
                                 :
-                                <p>No results</p>}
+                                <Typography style={{ padding: 10 }}>
+                                    No results    
+                                </Typography>}
                             </ClickAwayListener>
                         </Paper>
                     </Grow>
