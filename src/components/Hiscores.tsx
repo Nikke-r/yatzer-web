@@ -34,7 +34,7 @@ const Hiscores: React.FC = () => {
                 <AppBarSpacer />
                 <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                     <Typography variant="h4">
-                        Top ten
+                        Top Ten
                     </Typography>
                     <Tabs
                         value={tabValue}
