@@ -66,7 +66,7 @@ const GameFinishedModal: React.FC<Props> = ({ results, status }) => {
                     <table style={{ flexGrow: 1 }}>
                         <thead>
                             <tr><th>Player</th><th>Score</th></tr>
-                            {results.map(result => <tr><td>{result.player.username}</td><td>{result.score}</td></tr>)}
+                            {results.map(result => <tr><td style={{ textAlign: 'center' }}>{result.player.username}</td><td style={{ textAlign: 'center' }}>{result.score}</td></tr>)}
                         </thead>
                     </table>
                 </div>
