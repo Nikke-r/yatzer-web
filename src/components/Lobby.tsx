@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GameForm from './GameForm';
 import { UserType } from '../types';
+import Hiscores from './Hiscores';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -25,7 +26,9 @@ const Lobby: React.FC<Props> = ({ user }) => {
 
     return (
         <div className={classes.container}>
-            <div className={classes.placeholder} />
+            <div className={classes.placeholder}>
+                <Hiscores />
+            </div>
             <GameForm user={user} />
             <div className={classes.placeholder} />
         </div>

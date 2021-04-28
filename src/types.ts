@@ -6,6 +6,12 @@ export interface UserType {
     notifications: Notifications[];
     avatarUrl: string;
     friends: UserType[];
+    highestScore: number;
+}
+
+export interface Result {
+    player: UserType;
+    score: number;
 }
 
 export enum NotificationTypes {
@@ -85,6 +91,7 @@ export interface GameType {
     status: GameStatus;
     messages: ChatMessage[];
     createdAt: number;
+    finalResult: Result[];
 }
 
 export interface SignUpValues {
@@ -101,4 +108,9 @@ export interface JoinGameValues {
 
 export interface SendMessageValues {
     message: string;
+}
+
+export interface TopTen {
+    name: string;
+    amount: number;
 }

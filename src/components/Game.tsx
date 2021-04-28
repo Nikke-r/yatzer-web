@@ -12,6 +12,7 @@ import AppBarSpacer from './AppBarSpacer';
 import AppNotification from './AppNotification';
 import GameMenu from './GameMenu';
 import InvitationModal from './InvitationModal';
+import GameFinishedModal from './GameFinishedModal';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -110,6 +111,7 @@ const Game: React.FC<Props> = ({ user }) => {
                     handleGameInvitation={handleGameInvitation}
                     scoreboard={game.scoreboard}
                 />
+                <GameFinishedModal status={game.status} results={game.finalResult} />
             </>}
             {gameErrors && <AppNotification notification={gameErrors} />}
         </div>

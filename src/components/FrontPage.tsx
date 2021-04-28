@@ -3,6 +3,8 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import AppBarSpacer from './AppBarSpacer';
 import { makeStyles } from '@material-ui/core/styles';
+import { useQuery } from '@apollo/client';
+import { GET_GAME_COUNT, GET_USER_COUNT } from '../graphql/queries';
 
 const useStyles = makeStyles(() => ({
     title: {
@@ -13,6 +15,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const FrontPage: React.FC = () => {
+    const getUserCount = useQuery(GET_USER_COUNT);
+    const getGameCount = useQuery(GET_GAME_COUNT);
     const classes = useStyles();
 
     return (
@@ -28,6 +32,12 @@ const FrontPage: React.FC = () => {
             </Typography>
             <Typography variant="body1" style={{ textAlign: 'center' }}>
                 Sign Up or Sign In to get started right away!
+            </Typography>
+            <Typography variant="body1" style={{ textAlign: 'center' }}>
+                {getUserCount.data && getUserCount.data.getUserCount} users registered
+            </Typography>
+            <Typography variant="body1" style={{ textAlign: 'center' }}>
+                {getGameCount.data && getGameCount.data.getGameCount} games created
             </Typography>
         </Container>
     );

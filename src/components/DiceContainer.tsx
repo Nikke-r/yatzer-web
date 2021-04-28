@@ -63,12 +63,15 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
             <div className={classes.content}>  
                 <div>
                     <AppBarSpacer />
-                    <Typography variant="h4" style={{ marginRight: 5 }}>
-                        Current player: {inTurn.player.username} 
-                    </Typography>
-                    <Typography variant="h4" style={{ marginRight: 5 }}>
-                        Number of throws: {inTurn.numberOfThrows}
-                    </Typography>
+                    {status !== GameStatus.Ended &&
+                    <>
+                        <Typography variant="h4" style={{ marginRight: 5 }}>
+                            Current player: {inTurn.player.username} 
+                        </Typography>
+                        <Typography variant="h4" style={{ marginRight: 5 }}>
+                            Number of throws: {inTurn.numberOfThrows}
+                        </Typography>
+                    </>}
                 </div>
                 <div className={classes.dices}>
                     {dices.map((dice, index) => <Dice rolling={isAnimating} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
@@ -81,7 +84,7 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
                         inTurn.numberOfThrows >= 3 
                         || inTurn.player.username !== user!.username 
                         || status === GameStatus.Ended 
-                        || inTurn.rolling
+                        || isAnimating
                     }
                 >
                     {inTurn.numberOfThrows >= 3 ? 

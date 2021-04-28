@@ -163,7 +163,51 @@ export const GET_GAME = gql`
                 message
                 timestamp
             }
+            finalResult {
+                player {
+                    username
+                }
+                score
+            }
         }
     }
 `;
 
+export const GET_GAME_COUNT = gql`
+    query GetGameCount {
+        getGameCount 
+    }
+`;
+
+export const GET_USER_COUNT = gql`
+    query GetUserCount {
+        getUserCount 
+    }
+`;
+
+export const GET_USERS_MOST_PLAYED_GAMES = gql`
+    query MostPlayedGames {
+        mostPlayedGames {
+            name
+            amount
+        }
+    }
+`;
+
+export const GET_USERS_WITH_HIGHEST_SCORES = gql`
+    query HighestScores {
+        highestScores {
+            name
+            amount
+        }
+    }
+`;
+
+export const GET_MOST_WINS = gql`
+    query MostWins {
+        mostWins {
+            name
+            amount
+        }
+    }
+`;

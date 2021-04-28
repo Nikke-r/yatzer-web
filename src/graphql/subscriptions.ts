@@ -37,6 +37,12 @@ export const GAME_DATA_CHANGED = gql`
                 numberOfThrows
                 rolling
             }
+            finalResult {
+                player {
+                    username
+                }
+                score
+            }
         }
     }
 `;
@@ -93,6 +99,12 @@ export const USER_DATA_CHANGED = gql`
                     }
                     message
                     timestamp
+                }
+                finalResult {
+                    player {
+                        username
+                    }
+                    score
                 }
             }
         }
