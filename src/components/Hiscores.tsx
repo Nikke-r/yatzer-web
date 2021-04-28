@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBarSpacer from './AppBarSpacer';
 import { CircularProgress, Tab, Tabs, Typography } from '@material-ui/core';

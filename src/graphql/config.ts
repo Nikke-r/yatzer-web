@@ -36,7 +36,7 @@ const webSocketLink = new WebSocketLink({
 
 const splitLink = split(({ query }) => {
     const definition = getMainDefinition(query);
-    return (definition.kind === 'OperationDefinition' && definition.operation === 'subscription')
+    return (definition.kind === 'OperationDefinition' && definition.operation === 'subscription');
 },  webSocketLink, authLink.concat(httpLink as any) as any);
 
 const client = new ApolloClient({

@@ -74,7 +74,18 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
                     </>}
                 </div>
                 <div className={classes.dices}>
-                    {dices.map((dice, index) => <Dice rolling={isAnimating} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
+                    {status === GameStatus.Created ?
+                    <Typography variant="h5" style={{ textAlign: 'center' }}>
+                        Start the game by rolling the dices using the button below!
+                        <br />
+                        <br />
+                        Invite friends or share the room code by pressing the room code top left.
+                        <br />
+                        <br />
+                        After you have started ne game, others can not join the game anymore.
+                    </Typography>
+                    :
+                    dices.map((dice, index) => <Dice rolling={isAnimating} key={index} dice={dice} toggleDiceSelection={() => toggleDiceSelection(index)} />)}
                 </div>
                 <Button 
                     variant="outlined"

@@ -26,11 +26,11 @@ const HiscoreList: React.FC<Props> = ({ topTen, type }) => {
     return (
         <div className={classes.container}>
             <div className={classes.content}>
-                <table style={{ width: '100%' }}>
+                <table style={{ flexGrow: 1 }}>
                     <thead>
                         <tr>
-                            <th>Player</th>
-                            <th>{type === 0 ? 'Score' : type === 1 ? 'Games' : 'Wins'}</th>
+                            <th style={{ width: 250 }}>Player</th>
+                            <th style={{ width: 250 }}>{type === 0 ? 'Score' : type === 1 ? 'Games' : 'Wins'}</th>
                         </tr>
                     </thead>
                     <tbody>
