@@ -49,7 +49,7 @@ const Hiscores: React.FC = () => {
                         <CircularProgress />
                     :
                     highestScores.error || mostPlayedGames.error || mostWins.error ?
-                        <p>Error</p>
+                        <p>Error: {highestScores.error || mostPlayedGames.error || mostWins.error || 'Something went wrong'}</p>
                     :
                     tabValue === 0 ?
                     <HiscoreList type={tabValue} topTen={highestScores.data.highestScores} />
