@@ -28,10 +28,6 @@ const Hiscores: React.FC = () => {
         setTabValue(newValue);
     }
 
-    useEffect(() => {
-        console.table([highestScores.error, mostPlayedGames.error, mostWins.error]);
-    }, [highestScores.error, mostPlayedGames.error, mostWins.error]);
-
     return (
         <div className={classes.container}>
             <div className={classes.content}>
