@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBarSpacer from './AppBarSpacer';
 import { CircularProgress, Tab, Tabs, Typography } from '@material-ui/core';
@@ -28,6 +28,10 @@ const Hiscores: React.FC = () => {
         setTabValue(newValue);
     }
 
+    useEffect(() => {
+        console.table([highestScores.error, mostPlayedGames.error, mostWins.error]);
+    }, [highestScores.error, mostPlayedGames.error, mostWins.error]);
+
     return (
         <div className={classes.container}>
             <div className={classes.content}>
@@ -49,7 +53,7 @@ const Hiscores: React.FC = () => {
                         <CircularProgress />
                     :
                     highestScores.error || mostPlayedGames.error || mostWins.error ?
-                        <p>Error: {highestScores.error || mostPlayedGames.error || mostWins.error || 'Something went wrong'}</p>
+                        <p>Error</p>
                     :
                     tabValue === 0 ?
                     <HiscoreList type={tabValue} topTen={highestScores.data.highestScores} />
