@@ -110,3 +110,21 @@ export const USER_DATA_CHANGED = gql`
         }
     }
 `;
+
+export const LOBBY_DATA_CHANGED = gql`
+    subscription LobbyDataChanged {
+        lobbyDataChanged {
+            messages {
+                user {
+                    username
+                }
+                message
+                timestamp
+            }
+            users {
+                username
+            }
+            name
+        }
+    }
+`;

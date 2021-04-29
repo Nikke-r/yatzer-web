@@ -293,3 +293,33 @@ export const ACCEPT_FRIEND_REQUEST = gql`
         }
     }
 `;
+
+export const ADD_USER_TO_LOBBY = gql`
+    mutation AddUserToLobby($username: String!) {
+        addUserToLobby(
+            username: $username
+        ) {
+            name
+        }
+    }
+`;
+
+export const REMOVE_USER_FROM_LOBBY = gql`
+    mutation RemoveUserFromLobby($username: String!) {
+        removeUserFromLobby(
+            username: $username
+        ) {
+            name
+        }
+    }
+`;
+
+export const SEND_MESSAGE_TO_LOBBY = gql`
+    mutation SendMessageToLobby($message: String!) {
+        sendMessageToLobby(
+            message: $message
+        ) {
+            name
+        }
+    }
+`;

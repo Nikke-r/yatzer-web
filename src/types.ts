@@ -114,3 +114,9 @@ export interface TopTen {
     name: string;
     amount: number;
 }
+
+export interface LobbyType {
+    users: UserType[];
+    messages: ChatMessage[];
+    name: string;
+}

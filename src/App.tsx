@@ -15,6 +15,7 @@ import FrontPage from './components/FrontPage';
 import Center from './components/Center';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Lobby from './components/Lobby';
+import Hiscores from './components/Hiscores';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -63,13 +64,20 @@ const App = () => {
                         user ?
                         <Switch>
                             <Route exact path="/">
-                                <Lobby user={user} />
+                                <Lobby 
+                                    user={user} 
+                                />
                             </Route>
                             <Route path="/game/:id">
-                                <Game user={user} />
+                                <Game 
+                                    user={user} 
+                                />
                             </Route>
                             <Route path='/games'>
                                 <GamesList games={user.games} />
+                            </Route>
+                            <Route path="/hiscores">
+                                <Hiscores />
                             </Route>
                         </Switch>
                         :

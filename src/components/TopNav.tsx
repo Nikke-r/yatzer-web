@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import UserMenu from './UserMenu';
 import NotificationMenu from './NotificationMenu';
 import Search from './Search';
+import EmojiEvents from '@material-ui/icons/EmojiEvents';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles(() => ({
     titleText: {
@@ -49,6 +51,11 @@ const TopNav: React.FC<Props> = ({ darkTheme, toggleTheme, user, signOut }) => {
                 {user ?
                     <>
                         <Search currentUser={user} />
+                        <Link to='/hiscores' style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <IconButton>
+                                <EmojiEvents />
+                            </IconButton>
+                        </Link>
                         <NotificationMenu notifications={user.notifications} />
                         <UserMenu user={user} signOut={signOut} />
                     </>

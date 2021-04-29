@@ -211,3 +211,21 @@ export const GET_MOST_WINS = gql`
         }
     }
 `;
+
+export const GET_LOBBY = gql`
+    query GetLobby {
+        getLobby {
+            users {
+                username
+            }
+            name
+            messages {
+                user {
+                    username
+                }
+                message
+                timestamp
+            }
+        }
+    }
+`;

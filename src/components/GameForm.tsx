@@ -15,7 +15,7 @@ import AppNotification from './AppNotification';
 const useStyles = makeStyles(() => ({
     container: {
         display: 'flex',
-        flex: 1,
+        flex: 2,
         flexDirection: 'column',
         padding: 30,
     },
