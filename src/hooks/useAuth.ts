@@ -35,7 +35,14 @@ const useAuth = () => {
         },
         onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message || 'Something went wrong', 5),
     });
-    useSubscription(USER_DATA_CHANGED, { variables: { username: user?.username }, onSubscriptionData: ({ subscriptionData }) => setUser(subscriptionData.data.userDataChanged) });
+    useSubscription(USER_DATA_CHANGED, 
+        { 
+        variables: { username: user?.username }, 
+        onSubscriptionData: ({ subscriptionData }) => {
+            console.log(subscriptionData);
+            setUser(subscriptionData.data.userDataChanged)
+        },
+    });
 
     const handleSignUp = async (values: SignUpValues) => {
         try {

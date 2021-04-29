@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { GameType, JoinGameValues, UserType } from '../types';
 import Typography from '@material-ui/core/Typography';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,26 +11,32 @@ import { useMutation } from '@apollo/client';
 import { CREATE_GAME, JOIN_GAME } from '../graphql/mutations';
 import useAppNotifications from '../hooks/useAppNotifications';
 import AppNotification from './AppNotification';
+import AppBarSpacer from './AppBarSpacer';
 
 const useStyles = makeStyles(() => ({
     container: {
+        flex: 1.5,
         display: 'flex',
-        flex: 2,
-        flexDirection: 'column',
-        padding: 30,
+        maxHeight: '100vh',
     },
     content: {
         display: 'flex',
-        flexDirection: 'inherit',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        flex: 2
+        flexDirection: 'column',
+        flexGrow: 1,
+        padding: 30,
+    },
+    formArea: {
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     form: {
         width: '100%'
     },
     button: {
-        height: 70
+        height: 60,
     }
 }));
 
@@ -92,62 +98,63 @@ const GameForm: React.FC<Props> = ({ user }) => {
 
     return (
         <div className={classes.container}>
-            {user ?
             <div className={classes.content}>
-                <Typography variant="h4">
-                    Nice to see you {user.username}!
-                </Typography>
-                <Typography variant="h6">
-                    What you want to do?
-                </Typography>
-                <Button 
-                    fullWidth 
-                    variant="outlined" 
-                    onClick={handleGameCreation}
-                    className={classes.button}
-                >
-                    Create a new Game
-                </Button>
-                <Typography variant="h6">
-                    Or
-                </Typography>
-                <form onSubmit={formik.handleSubmit} className={classes.form}>
-                    <TextField 
-                        id="slug"
-                        label="Slug"
-                        name="slug"
-                        required
-                        fullWidth
-                        onChange={formik.handleChange}
-                        error={formik.touched.slug && Boolean(formik.errors.slug)}
-                        helperText={formik.touched.slug && formik.errors.slug}
-                        value={formik.values.slug}
-                        variant="outlined"
-                        style={{ marginBottom: 7 }}
-                    />
+                <AppBarSpacer />
+                {user &&
+                <div className={classes.formArea}>
+                    <Typography variant="h4">
+                        Nice to see you {user.username}!
+                    </Typography>
+                    <Typography variant="h6">
+                        What you want to do?
+                    </Typography>
                     <Button 
-                        type="submit" 
                         fullWidth 
-                        variant="outlined"
+                        variant="outlined" 
+                        onClick={handleGameCreation}
                         className={classes.button}
                     >
-                        Join a Room
+                        Create a new Game
                     </Button>
-                </form>
-                <Typography variant="h6">
-                    Or
-                </Typography>
-                <Button 
-                    fullWidth 
-                    variant="outlined" 
-                    onClick={() => history.push('/games')}
-                    className={classes.button}
-                >
-                    Check your games
-                </Button>
+                    <Typography variant="h6">
+                        Or
+                    </Typography>
+                    <form onSubmit={formik.handleSubmit} className={classes.form}>
+                        <TextField 
+                            id="slug"
+                            label="Slug"
+                            name="slug"
+                            required
+                            fullWidth
+                            onChange={formik.handleChange}
+                            error={formik.touched.slug && Boolean(formik.errors.slug)}
+                            helperText={formik.touched.slug && formik.errors.slug}
+                            value={formik.values.slug}
+                            variant="outlined"
+                            style={{ marginBottom: 7 }}
+                        />
+                        <Button 
+                            type="submit" 
+                            fullWidth 
+                            variant="outlined"
+                            className={classes.button}
+                        >
+                            Join a Room
+                        </Button>
+                    </form>
+                    <Typography variant="h6">
+                        Or
+                    </Typography>
+                    <Button 
+                        fullWidth 
+                        variant="outlined" 
+                        onClick={() => history.push('/games')}
+                        className={classes.button}
+                    >
+                        Check your games
+                    </Button> 
+                </div>}
             </div>
-            :
-            <Redirect to="/signIn" />}
             {notification && <AppNotification notification={notification} />}
         </div>
     );

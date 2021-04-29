@@ -3,6 +3,7 @@ import { UserType } from '../types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBarSpacer from './AppBarSpacer';
 import Typography from '@material-ui/core/Typography';
+import LobbyListItem from './LobbyListItem';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -26,10 +27,10 @@ const LobbyUserList: React.FC<Props> = ({ users }) => {
         <div className={classes.container}>
             <div className={classes.content}>
                 <AppBarSpacer />
-                <Typography variant="h4" style={{ paddingBottom: 30 }}>
-                    Users in the lobby
+                <Typography variant="h4" style={{ paddingBottom: 20 }}>
+                    Users online
                 </Typography>
-                {users.map(user => <Typography variant="body1">{user.username}</Typography>)}
+                {users.map(user => <LobbyListItem key={user.username} user={user} />)}
             </div>
         </div>
     );

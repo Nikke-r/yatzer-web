@@ -68,6 +68,7 @@ const InvitationModal: React.FC<Props> = ({
                                 color="primary"
                                 control={<Checkbox onChange={handleUserSelection} name={friend.username} />}
                                 label={friend.username}
+                                key={friend.username}
                             />
                         ))}
                     </FormGroup>

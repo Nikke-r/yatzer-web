@@ -32,9 +32,12 @@ const Scorecard: React.FC<Props> = ({ game, postScore, user }) => {
                             <th />
                             {game.scoreboard.map(column => 
                             <th 
-                                style={{ fontStyle: column.player.username === game.inTurn.player.username ? 'oblique' : '' }} 
-                                key={column.player.username}>
-                                {column.player.username}
+                                style={{ fontStyle: column.player.username === game.inTurn.player.username ? 'oblique' : '', width: 50 }} 
+                                key={column.player.username}
+                                colSpan={0}
+
+                            >
+                                {column.player.username.split('').splice(0, 2).join('')}
                             </th>)}
                         </tr>
                     </thead>

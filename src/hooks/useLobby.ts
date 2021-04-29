@@ -16,7 +16,7 @@ const useLobby = (username: string) => {
     const getLobby = useQuery<GetLobbyQuery>(GET_LOBBY);
     const [addUserToLobby] = useMutation(ADD_USER_TO_LOBBY, { variables: { username }, onError: ({ graphQLErrors }) => handleNotification((graphQLErrors[0].message || 'Something went wrong'), 5) });
     const [removeUserFromLobby] = useMutation(REMOVE_USER_FROM_LOBBY, { variables: { username }, onError: ({ graphQLErrors }) => handleNotification((graphQLErrors[0].message || 'Something went wrong'), 5) });
-    const [sendMessageToLobby] = useMutation(SEND_MESSAGE_TO_LOBBY, { onError: ({ graphQLErrors }) => handleNotification((graphQLErrors[0].message || 'Something went wrong'), 5) })
+    const [sendMessageToLobby] = useMutation(SEND_MESSAGE_TO_LOBBY, { onError: ({ graphQLErrors }) => handleNotification((graphQLErrors[0].message || 'Something went wrong'), 5) });
     useSubscription(LOBBY_DATA_CHANGED, { onSubscriptionData: ({ subscriptionData }) => setLobby(subscriptionData.data.lobbyDataChanged)});
 
     window.onbeforeunload = () => {
