@@ -82,7 +82,7 @@ const SignUpForm: React.FC<Props> = ({ signUp, authError }) => {
                         error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                         helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
                     />
-                    <Button type="submit" variant="outlined" fullWidth>
+                    <Button type="submit" variant="outlined" fullWidth style={{ height: 60 }}>
                         Sign up
                     </Button>
                 </form>

@@ -15,8 +15,8 @@ const authLink = setContext((_: unknown, { headers }) => {
     }
 });
 
-const httpUri = process.env.NODE_ENV === 'production' ? 'https://yatzer-backend.herokuapp.com/graphql' : 'http://localhost:3001/graphql';
-const wsUri = process.env.NODE_ENV === 'production' ? 'wss://yatzer-backend.herokuapp.com/graphql' : 'ws://localhost:3001/graphql';
+const httpUri = process.env.NODE_ENV === 'production' ? 'https://yatzer-backend.herokuapp.com/graphql' : 'https://localhost:8000/graphql';
+const wsUri = process.env.NODE_ENV === 'production' ? 'wss://yatzer-backend.herokuapp.com/graphql' : 'wss://localhost:8000/graphql';
 
 const httpLink = createUploadLink({
     uri: httpUri

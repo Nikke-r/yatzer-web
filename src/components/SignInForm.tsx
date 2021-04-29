@@ -67,7 +67,7 @@ const SignInForm: React.FC<Props> = ({ signIn, authError }) => {
                         margin="normal"
                         value={formik.values.password}
                     />
-                    <Button fullWidth type="submit" variant="outlined">
+                    <Button fullWidth type="submit" variant="outlined" style={{ height: 60 }}>
                         Sign In
                     </Button>
                 </form>
