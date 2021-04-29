@@ -14,6 +14,8 @@ import NotificationMenu from './NotificationMenu';
 import Search from './Search';
 import EmojiEvents from '@material-ui/icons/EmojiEvents';
 import IconButton from '@material-ui/core/IconButton';
+import { useMutation } from '@apollo/client';
+import { REMOVE_USER_FROM_LOBBY } from '../graphql/mutations';
 
 const useStyles = makeStyles(() => ({
     titleText: {
@@ -31,6 +33,7 @@ interface Props {
 
 const TopNav: React.FC<Props> = ({ darkTheme, toggleTheme, user, signOut }) => {
     const classes = useStyles();
+    const [removeUserFromLobby] = useMutation(REMOVE_USER_FROM_LOBBY);
 
     return (
         <AppBar position="absolute" color="inherit">
@@ -57,7 +60,10 @@ const TopNav: React.FC<Props> = ({ darkTheme, toggleTheme, user, signOut }) => {
                             </IconButton>
                         </Link>
                         <NotificationMenu notifications={user.notifications} />
-                        <UserMenu user={user} signOut={signOut} />
+                        <UserMenu user={user} signOut={() => {
+                            removeUserFromLobby({ variables: { username: user.username }});
+                            signOut();
+                        }} />
                     </>
                 :
                 <>

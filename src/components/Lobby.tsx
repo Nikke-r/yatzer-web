@@ -21,13 +21,13 @@ interface Props {
     user: UserType | undefined;
 }
 
-const Lobby: React.FC<Props> = ({ user}) => {
+const Lobby: React.FC<Props> = ({ user }) => {
     const classes = useStyles();
     const {
         loading,
         lobby,
         handleMessageSending,
-        notification
+        notification,
     } = useLobby(user!.username);
 
     return (

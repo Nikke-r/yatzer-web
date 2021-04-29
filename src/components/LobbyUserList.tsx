@@ -11,10 +11,7 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         padding: 30,
     },
-    content: {
-
-    }
-}))
+}));
 
 interface Props {
     users: UserType[];
@@ -25,10 +22,10 @@ const LobbyUserList: React.FC<Props> = ({ users }) => {
 
     return (
         <div className={classes.container}>
-            <div className={classes.content}>
+            <div>
                 <AppBarSpacer />
                 <Typography variant="h4" style={{ paddingBottom: 20 }}>
-                    Users online
+                    Users in the lobby
                 </Typography>
                 {users.map(user => <LobbyListItem key={user.username} user={user} />)}
             </div>

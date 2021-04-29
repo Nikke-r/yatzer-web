@@ -39,7 +39,6 @@ const useAuth = () => {
         { 
         variables: { username: user?.username }, 
         onSubscriptionData: ({ subscriptionData }) => {
-            console.log(subscriptionData);
             setUser(subscriptionData.data.userDataChanged)
         },
     });

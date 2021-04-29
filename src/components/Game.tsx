@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserType } from '../types';
 import { useLocation } from 'react-router';
 import useGame from '../hooks/useGame';
@@ -13,6 +13,8 @@ import AppNotification from './AppNotification';
 import GameMenu from './GameMenu';
 import InvitationModal from './InvitationModal';
 import GameFinishedModal from './GameFinishedModal';
+import { useMutation } from '@apollo/client';
+import { REMOVE_USER_FROM_LOBBY } from '../graphql/mutations';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -56,9 +58,16 @@ const Game: React.FC<Props> = ({ user }) => {
         handleUserSelection,
         handleGameInvitation
     } = useGame(location.pathname.split('/')[2]);
+    const [removeUserFromLobby] = useMutation(REMOVE_USER_FROM_LOBBY);
 
     const openModal = () => setInvitationModalOpen(true);
     const closeModal = () => setInvitationModalOpen(false);
+
+    useEffect(() => {
+        if (user) {
+            removeUserFromLobby({ variables: { username: user.username }});
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className={classes.container}>

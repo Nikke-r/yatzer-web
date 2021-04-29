@@ -65,12 +65,12 @@ const App = () => {
                         <Switch>
                             <Route exact path="/">
                                 <Lobby 
-                                    user={user} 
+                                    user={user}
                                 />
                             </Route>
                             <Route path="/game/:id">
                                 <Game 
-                                    user={user} 
+                                    user={user}
                                 />
                             </Route>
                             <Route path='/games'>

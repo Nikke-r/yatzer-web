@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useSubscription } from "@apollo/client";
+import { FetchResult, MutationFunctionOptions, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useEffect, useState } from "react"
 import { ADD_USER_TO_LOBBY, REMOVE_USER_FROM_LOBBY, SEND_MESSAGE_TO_LOBBY } from "../graphql/mutations";
 import { GET_LOBBY } from "../graphql/queries";
@@ -8,6 +8,10 @@ import useAppNotifications from "./useAppNotifications";
 
 interface GetLobbyQuery {
     getLobby: LobbyType;
+}
+
+export interface RemoveUserFromLoppyRefType {
+    removeUserFromLobby: (options?: MutationFunctionOptions<any, {username: string;}> | undefined) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
 }
 
 const useLobby = (username: string) => {
