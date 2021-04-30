@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { GameType, JoinGameValues, UserType } from '../types';
 import Typography from '@material-ui/core/Typography';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';

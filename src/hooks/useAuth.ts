@@ -33,7 +33,7 @@ const useAuth = () => {
             setUser(data.signIn);
             history.push('/');
         },
-        onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message || 'Something went wrong', 5),
+        onError: ({ graphQLErrors }) => console.log(graphQLErrors),
     });
     useSubscription(USER_DATA_CHANGED, 
         { 

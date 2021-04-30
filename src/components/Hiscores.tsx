@@ -5,6 +5,7 @@ import { CircularProgress, Tab, Tabs, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { GET_MOST_WINS, GET_USERS_MOST_PLAYED_GAMES, GET_USERS_WITH_HIGHEST_SCORES } from '../graphql/queries';
 import HiscoreList from './HiscoreList';
+import Center from './Center';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -32,7 +33,7 @@ const Hiscores: React.FC = () => {
         <div className={classes.container}>
             <div className={classes.content}>
                 <AppBarSpacer />
-                <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, alignItems: 'center' }}>
                     <Typography variant="h4">
                         Top Ten
                     </Typography>
@@ -46,7 +47,9 @@ const Hiscores: React.FC = () => {
                         <Tab label="Most wins" />
                     </Tabs>
                     {highestScores.loading || mostPlayedGames.loading || mostWins.loading ?
-                        <CircularProgress />
+                        <Center>
+                            <CircularProgress />
+                        </Center>
                     :
                     highestScores.error || mostPlayedGames.error || mostWins.error ?
                         <p>Error</p>
