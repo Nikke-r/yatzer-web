@@ -79,7 +79,7 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
                         Start the game by rolling the dices using the button below!
                         <br />
                         <br />
-                        Invite friends or share the room code by pressing the room code top left.
+                        Invite friends, share the room code to lobby or copy it by pressing the room code top left.
                         <br />
                         <br />
                         After you have started ne game, others can not join the game anymore.
@@ -103,8 +103,11 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
                         || isAnimating
                     }
                 >
-                    {inTurn.numberOfThrows >= 3 ? 
+                    {inTurn.numberOfThrows >= 3 && inTurn.player.username && user!.username ? 
                     'Place your score'
+                    :
+                    inTurn.numberOfThrows >= 3 ?
+                    `Waiting for ${inTurn.player.username} to place the score`
                     :
                     inTurn.player.username !== user!.username ? 
                     'Not in turn'
