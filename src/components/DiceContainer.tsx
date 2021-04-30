@@ -103,7 +103,7 @@ const DiceContainer: React.FC<Props> = ({ dices, toggleDiceSelection, rollDices,
                         || isAnimating
                     }
                 >
-                    {inTurn.numberOfThrows >= 3 && inTurn.player.username && user!.username ? 
+                    {inTurn.numberOfThrows >= 3 && inTurn.player.username === user!.username ? 
                     'Place your score'
                     :
                     inTurn.numberOfThrows >= 3 ?
