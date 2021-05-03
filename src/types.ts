@@ -1,4 +1,5 @@
 export interface UserType {
+    id: string;
     username: string;
     createdAt: number;
     games: GameType[];

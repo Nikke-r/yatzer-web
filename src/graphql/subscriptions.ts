@@ -48,10 +48,11 @@ export const GAME_DATA_CHANGED = gql`
 `;
 
 export const USER_DATA_CHANGED = gql`
-    subscription UserDataChanged($username: String!) {
+    subscription UserDataChanged($id: ID!) {
         userDataChanged(
-            username: $username
+            id: $id
         ) {
+            id
             username
             avatarUrl
             createdAt

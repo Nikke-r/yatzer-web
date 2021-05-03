@@ -114,7 +114,7 @@ const GameForm: React.FC<Props> = ({ user }) => {
                         onClick={handleGameCreation}
                         className={classes.button}
                     >
-                        Create a new Game
+                        Start a new Game
                     </Button>
                     <Typography variant="h6">
                         Or

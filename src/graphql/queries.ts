@@ -6,6 +6,7 @@ export const SIGN_IN = gql`
             username: $username,
             password: $password
         ) {
+            id
             username
             token
             avatarUrl
@@ -63,6 +64,7 @@ export const SIGN_IN = gql`
 export const CURRENT_USER = gql`
     query CurrentUser {
         currentUser {
+            id
             username
             avatarUrl
             createdAt

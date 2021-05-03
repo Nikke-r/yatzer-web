@@ -32,12 +32,15 @@ const FrontPage: React.FC = () => {
                 <br />
                 <br />
                 <Link to="/signIn" style={{ textDecoration: 'none', color: 'inherit', textDecorationLine: 'underline' }}>
-                    Sign in&nbsp;
+                    Sign in
                 </Link>
-                 or 
+                &nbsp;
+                or
+                &nbsp;
                 <Link to="/signUp" style={{ textDecoration: 'none', color: 'inherit', textDecorationLine: 'underline' }}>
-                    &nbsp;sign up&nbsp;
+                    sign up
                 </Link>
+                &nbsp;
                  to get started!
                 <br />
                 <br />
