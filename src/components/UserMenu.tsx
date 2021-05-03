@@ -11,6 +11,8 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router';
+import { useMutation } from '@apollo/client';
+import { REMOVE_USER_FROM_LOBBY } from '../graphql/mutations';
 
 interface Props {
     user: UserType;
@@ -27,6 +29,7 @@ const UserMenu: React.FC<Props> = ({ user, signOut }) => {
         handleListKeyDown,
         closeMenu
     } = useDropDownMenu();
+    const [removeUserFromLobby] = useMutation(REMOVE_USER_FROM_LOBBY);
 
     return (
         <div>
@@ -67,9 +70,14 @@ const UserMenu: React.FC<Props> = ({ user, signOut }) => {
                                     }}>
                                         My Games
                                     </MenuItem>
-                                    <MenuItem onClick={() => {
-                                        signOut();
-                                        closeMenu();
+                                    <MenuItem onClick={async () => {
+                                        try {
+                                            signOut();
+                                            removeUserFromLobby({ variables: { username: user.username } });
+                                            closeMenu();
+                                        } catch (error) {
+                                            console.log(error.message);
+                                        }
                                     }}>
                                         Sign Out
                                     </MenuItem>

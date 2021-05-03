@@ -32,8 +32,6 @@ const Lobby: React.FC<Props> = ({ user }) => {
     } = useLobby(user!.username);
     const matches = useMediaQuery('(min-width: 800px)');
 
-    console.log(matches);
-
     return (
         <div className={classes.container}>
             {loading ?

@@ -67,6 +67,7 @@ const FrontPage: React.FC = () => {
                 <li>Search doesn't always show all of the users</li>
                 <li>Sign out doesn't always sign out</li>
                 <li>Some of the data might not update real time always in everywhere (like friends etc..). Refreshing the page helps!</li>
+                <li>If the user signs out, the user is not removed from the lobby</li>
             </ul>
         </Container>
     );

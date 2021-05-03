@@ -36,7 +36,7 @@ const useAuth = () => {
         onError: ({ graphQLErrors }) => console.log(graphQLErrors),
     });
     useSubscription(USER_DATA_CHANGED, { 
-        variables: { id: user?.id},
+        variables: { id: user?.id },
         onSubscriptionData: ({ subscriptionData }) => {
             setUser(subscriptionData.data.userDataChanged)
         },
