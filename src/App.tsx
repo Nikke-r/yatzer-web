@@ -21,7 +21,6 @@ const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
         height: '100vh',
-        overflow: 'hidden'
     },
     content: {
         flexGrow: 1,

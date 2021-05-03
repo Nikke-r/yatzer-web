@@ -62,8 +62,8 @@ const UserMenu: React.FC<Props> = ({ user, signOut }) => {
                                     id="menu-list-grow"
                                 >
                                     <MenuItem onClick={() => {
-                                        closeMenu();
                                         history.push('/games');
+                                        closeMenu();
                                     }}>
                                         My Games
                                     </MenuItem>

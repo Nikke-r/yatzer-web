@@ -7,6 +7,7 @@ import AppNotification from './AppNotification';
 import LobbyUserList from './LobbyUserList';
 import { CircularProgress } from '@material-ui/core';
 import useLobby from '../hooks/useLobby';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -29,6 +30,9 @@ const Lobby: React.FC<Props> = ({ user }) => {
         handleMessageSending,
         notification,
     } = useLobby(user!.username);
+    const matches = useMediaQuery('(min-width: 800px)');
+
+    console.log(matches);
 
     return (
         <div className={classes.container}>
@@ -37,9 +41,9 @@ const Lobby: React.FC<Props> = ({ user }) => {
             :
             lobby ? 
             <>
-                <LobbyUserList users={lobby?.users} />
+                {matches && <LobbyUserList users={lobby?.users} />}
                 <GameForm user={user} />
-                <Chat messages={lobby.messages} sendMessage={handleMessageSending} />
+                {matches && <Chat messages={lobby.messages} sendMessage={handleMessageSending} />}
             </>
             :
             <p>Something went wrong</p>}

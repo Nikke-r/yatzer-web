@@ -323,3 +323,13 @@ export const SEND_MESSAGE_TO_LOBBY = gql`
         }
     }
 `;
+
+export const EDIT_PROFILE = gql`
+    mutation EditProfile($username: String!) {
+        editProfile(
+            username: $username
+        ) {
+            username
+        }
+    }
+`;
