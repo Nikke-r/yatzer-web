@@ -44,7 +44,11 @@ const Scorecard: React.FC<Props> = ({ game, postScore, user }) => {
                     <tbody>
                         {Object.values(ScoreboardRowName).map((name, index) => (
                             <tr key={name}>
-                                <td>{name.split(/(?=[A-Z])/).join(' ')}</td>
+                                <td 
+                                    style={{ fontWeight: name === ScoreboardRowName.Sum || name === ScoreboardRowName.Total || name === ScoreboardRowName.Bonus ? 'bold' : 'normal'}}
+                                >
+                                    {name.split(/(?=[A-Z])/).join(' ')}
+                                </td>
                                 {game.scoreboard.map((column) => 
                                     <td 
                                         key={column.player.username}

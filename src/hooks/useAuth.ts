@@ -54,7 +54,7 @@ const useAuth = () => {
                 signIn({ variables: { username: values.username, password: values.password }});
             }
         } catch (error) {
-            handleNotification(error || 'Something went wrong', 5);
+            handleNotification((error.message || 'Something went wrong'), 5);
         }
     }
 
@@ -65,7 +65,7 @@ const useAuth = () => {
             setUser(undefined);
             history.push('/');
         } catch (error) {
-            handleNotification(error || 'Something went wrong', 5)
+            handleNotification((error.message || 'Something went wrong'), 5)
         }
     }
 
