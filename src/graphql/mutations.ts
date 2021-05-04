@@ -299,9 +299,7 @@ export const ADD_USER_TO_LOBBY = gql`
         addUserToLobby(
             username: $username
         ) {
-            users {
-                username
-            }
+            name
         }
     }
 `;
@@ -311,9 +309,7 @@ export const REMOVE_USER_FROM_LOBBY = gql`
         removeUserFromLobby(
             username: $username
         ) {
-            users {
-                username
-            }
+            name
         }
     }
 `;

@@ -30,6 +30,7 @@ const useLobby = (username: string) => {
     useEffect(() => {
         if (lobby) {
             if (lobby.users.find(user => user.username === username) !== undefined) return;
+            console.log('added');
             addUserToLobby();
         }
     }, [lobby]); // eslint-disable-line react-hooks/exhaustive-deps

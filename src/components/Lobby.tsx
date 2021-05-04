@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GameForm from './GameForm';
 import { UserType } from '../types';
@@ -31,6 +31,8 @@ const Lobby: React.FC<Props> = ({ user }) => {
         notification,
     } = useLobby(user!.username);
     const matches = useMediaQuery('(min-width: 800px)');
+
+    useEffect(() => { console.log(1) }, [user]);
 
     return (
         <div className={classes.container}>

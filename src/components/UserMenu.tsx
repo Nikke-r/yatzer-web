@@ -72,9 +72,12 @@ const UserMenu: React.FC<Props> = ({ user, signOut }) => {
                                     </MenuItem>
                                     <MenuItem onClick={async () => {
                                         try {
-                                            signOut();
-                                            removeUserFromLobby({ variables: { username: user.username } });
-                                            closeMenu();
+                                            const { data } = await removeUserFromLobby({ variables: { username: user.username }});
+                                            if (data) {
+                                                console.log(data);
+                                                signOut();
+                                                closeMenu();
+                                            }
                                         } catch (error) {
                                             console.log(error.message);
                                         }

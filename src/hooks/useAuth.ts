@@ -33,7 +33,7 @@ const useAuth = () => {
             setUser(data.signIn);
             history.push('/');
         },
-        onError: ({ graphQLErrors }) => console.log(graphQLErrors),
+        onError: ({ graphQLErrors }) => handleNotification(graphQLErrors[0].message, 5),
     });
     useSubscription(USER_DATA_CHANGED, { 
         variables: { id: user?.id },
@@ -59,10 +59,10 @@ const useAuth = () => {
     }
 
     const signOut = async () => {
-        try {
-            await client.resetStore();
-            localStorage.removeItem('token');
+        try {  
+            localStorage.clear();
             setUser(undefined);
+            await client.resetStore();
             history.push('/');
         } catch (error) {
             handleNotification((error.message || 'Something went wrong'), 5)
